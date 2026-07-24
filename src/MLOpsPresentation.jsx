@@ -711,9 +711,23 @@ function Slide21() {
 /*  Quiz                                                                    */
 /* ---------------------------------------------------------------------- */
 
+function shuffledIndices(n) {
+  const order = Array.from({ length: n }, (_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+
 function QuizSlide({ index, total, topic, question, options, correct, correctReason, wrongReasons }) {
   const [selected, setSelected] = useState(null);
+  const [order] = useState(() => shuffledIndices(options.length));
   const answered = selected !== null;
+
+  const displayOptions = order.map((i) => options[i]);
+  const displayWrongReasons = order.map((i) => wrongReasons[i]);
+  const displayCorrect = order.indexOf(correct);
 
   return (
     <Slide eyebrow={`Quiz · ${topic}`}>
@@ -724,9 +738,9 @@ function QuizSlide({ index, total, topic, question, options, correct, correctRea
         {question}
       </h2>
       <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2">
-        {options.map((opt, i) => {
+        {displayOptions.map((opt, i) => {
           const letter = "ABCD"[i];
-          const isCorrect = i === correct;
+          const isCorrect = i === displayCorrect;
           const isSelected = i === selected;
           let stateClasses = "border-[#a0cde1]/20 bg-[#0e2038]/40 hover:border-[#7ec6e6]/50";
           let badge = null;
@@ -759,10 +773,10 @@ function QuizSlide({ index, total, topic, question, options, correct, correctRea
       {answered && (
         <div
           className={`mt-6 max-w-3xl border-l-2 pl-4 text-sm leading-relaxed ${
-            selected === correct ? "border-emerald-400/60 text-emerald-200" : "border-red-400/60 text-red-200"
+            selected === displayCorrect ? "border-emerald-400/60 text-emerald-200" : "border-red-400/60 text-red-200"
           }`}
         >
-          {selected === correct ? correctReason : wrongReasons[selected]}
+          {selected === displayCorrect ? correctReason : displayWrongReasons[selected]}
         </div>
       )}
     </Slide>
