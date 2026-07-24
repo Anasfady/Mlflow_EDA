@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0e2038;
+  font-family: "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+.blueprint-grid {
+  background-color: #0e2038;
+  background-image: linear-gradient(rgba(111, 184, 217, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(111, 184, 217, 0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@keyframes slide-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-enter {
+  animation: slide-fade-in 0.4s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-enter {
+    animation: none;
+  }
+}
