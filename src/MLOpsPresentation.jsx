@@ -774,17 +774,17 @@ const QUIZ_QUESTIONS = [
     topic: "MLflow",
     question: "In MLflow, which of these would you log as a Parameter rather than a Metric?",
     options: [
-      "The model's test accuracy",
       "The learning rate used for training",
+      "The model's test accuracy",
       "A confusion matrix image",
       "The trained model file",
     ],
-    correct: 1,
+    correct: 0,
     correctReason:
       "Parameters are inputs you fix before training starts — a learning rate is exactly that.",
     wrongReasons: [
-      "Test accuracy is measured after training finishes — that makes it a metric, not a parameter.",
       null,
+      "Test accuracy is measured after training finishes — that makes it a metric, not a parameter.",
       "A confusion matrix image is a file attached to the run — that's an artifact, not a parameter.",
       "The trained model file is logged as a model artifact via mlflow.log_model(), not a parameter.",
     ],
@@ -833,18 +833,18 @@ const QUIZ_QUESTIONS = [
       "Why is it useful to log the same metric (e.g. F1-score) across several Runs with different hyperparameters?",
     options: [
       "It isn't useful — one Run is always enough",
-      "It lets you compare configurations objectively instead of relying on memory",
-      "MLflow requires at least 3 Runs per Experiment to function",
       "It reduces the model's training time",
+      "MLflow requires at least 3 Runs per Experiment to function",
+      "It lets you compare configurations objectively instead of relying on memory",
     ],
-    correct: 1,
+    correct: 3,
     correctReason:
       "Logging the same metric across configurations is what turns tuning into a comparison instead of a guess.",
     wrongReasons: [
       "One run gives you a single number with nothing to compare it against — that's exactly what tracking multiple runs solves.",
-      null,
-      "MLflow has no minimum run count — an Experiment works fine with a single logged Run.",
       "Logging a metric only records information; it has no effect on how long training takes.",
+      "MLflow has no minimum run count — an Experiment works fine with a single logged Run.",
+      null,
     ],
   },
   {
@@ -852,17 +852,17 @@ const QUIZ_QUESTIONS = [
     question:
       "What's the main difference between what Scikit-learn does and what an experiment-tracking tool like MLflow does?",
     options: [
-      "Scikit-learn logs metadata; MLflow trains the model",
       "Scikit-learn performs the actual training/prediction; MLflow records what happened during that process",
+      "Scikit-learn logs metadata; MLflow trains the model",
       "They do the same job, just with different syntax",
       "MLflow replaces the need for a machine learning library entirely",
     ],
-    correct: 1,
+    correct: 0,
     correctReason:
       "Scikit-learn does the actual modeling work; MLflow just records what happened so you can find it again later.",
     wrongReasons: [
-      "That's backwards — scikit-learn does the training, MLflow does the logging.",
       null,
+      "That's backwards — scikit-learn does the training, MLflow does the logging.",
       "They solve different problems: one builds models, the other tracks and organizes the results of doing so.",
       "MLflow complements a library like scikit-learn — you still need it to actually build and fit models.",
     ],
@@ -893,17 +893,17 @@ const QUIZ_QUESTIONS = [
       "Why might engineering a ratio between two correlated numeric features (instead of using them separately) help a classifier?",
     options: [
       "It always improves accuracy regardless of the model",
-      "It can capture a relationship between the two variables that's more directly relevant to the target than either raw value alone",
       "It reduces the dataset size",
+      "It can capture a relationship between the two variables that's more directly relevant to the target than either raw value alone",
       "It removes the need for a train/test split",
     ],
-    correct: 1,
+    correct: 2,
     correctReason:
       "A ratio can encode the relationship between two variables in a way neither raw feature captures alone.",
     wrongReasons: [
       "No engineered feature is guaranteed to help every model — it depends on the data and the target relationship.",
-      null,
       "Adding a derived feature is a new column, not fewer rows — dataset size is unaffected.",
+      null,
       "A ratio feature doesn't change how you evaluate the model — you still need a held-out split to check generalization.",
     ],
   },
@@ -913,35 +913,35 @@ const QUIZ_QUESTIONS = [
       "Why is it risky to reuse a single already-fitted ColumnTransformer/preprocessor object across two different model pipelines?",
     options: [
       "It isn't risky — this is the recommended approach",
-      "Fitting it again inside the second pipeline can silently change its state, affecting the first pipeline too — use clone() to avoid this",
-      "ColumnTransformer objects can only be used once, ever, and must be deleted after",
       "It causes a memory leak that crashes the kernel",
+      "ColumnTransformer objects can only be used once, ever, and must be deleted after",
+      "Fitting it again inside the second pipeline can silently change its state, affecting the first pipeline too — use clone() to avoid this",
     ],
-    correct: 1,
+    correct: 3,
     correctReason:
       "Fitting a shared transformer inside a second pipeline can quietly mutate it — clone() keeps the two independent.",
     wrongReasons: [
       "It is risky — reusing a fitted transformer across pipelines is a common source of subtle bugs, not a best practice.",
-      null,
-      "A transformer can be refit any number of times; the real problem is shared mutable state, not a one-use limit.",
       "It doesn't cause a memory leak or crash — the real failure mode is silent state corruption between the two pipelines.",
+      "A transformer can be refit any number of times; the real problem is shared mutable state, not a one-use limit.",
+      null,
     ],
   },
   {
     topic: "Preprocessing & Ensemble Methods",
     question: "What does handle_unknown='ignore' do when passed to a OneHotEncoder?",
     options: [
-      "Ignores missing values in the training set",
       "Prevents an error when the encoder sees a category at prediction time that it never saw during training",
+      "Ignores missing values in the training set",
       "Skips encoding for columns with too many unique values",
       "Disables one-hot encoding and falls back to label encoding",
     ],
-    correct: 1,
+    correct: 0,
     correctReason:
       "It tells the encoder to zero-fill an unseen category at inference instead of raising an error.",
     wrongReasons: [
-      "Missing values (NaNs) are a separate concern, usually handled by an imputer — not what this parameter controls.",
       null,
+      "Missing values (NaNs) are a separate concern, usually handled by an imputer — not what this parameter controls.",
       "It has nothing to do with how many categories a column has — high cardinality isn't what triggers this behavior.",
       "Encoding still happens as one-hot; unseen categories are just zero-filled instead of raising an error.",
     ],
