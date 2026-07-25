@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { LangProvider, useLang, LanguageSwitcher } from "./i18n.jsx";
-import { UI, DECK, QUIZ } from "./content.js";
+import { UI, DECK, QUIZ, codeText } from "./content.js";
 
 /* ---------------------------------------------------------------------- */
 /*  Shared building blocks                                                 */
@@ -59,6 +59,33 @@ function Grid({ children, cols = 3 }) {
         </div>
       ))}
     </div>
+  );
+}
+
+function Bullet({ children }) {
+  return (
+    <li className="flex gap-3 text-sm leading-relaxed text-[#8fa9bd]">
+      <span className="mt-1.5 h-1 w-2.5 shrink-0 bg-[#7ec6e6]" />
+      <span>{children}</span>
+    </li>
+  );
+}
+
+function BulletList({ items }) {
+  return (
+    <ul className="space-y-2.5">
+      {items.map((item, i) => (
+        <Bullet key={i}>{item}</Bullet>
+      ))}
+    </ul>
+  );
+}
+
+function Chip({ children }) {
+  return (
+    <span className="inline-block border border-[#a0cde1]/25 px-2.5 py-1 font-mono text-[11px] text-[#eef3f2]">
+      {children}
+    </span>
   );
 }
 
@@ -130,7 +157,7 @@ function Slide({ eyebrow, title, lede, children, align = "start" }) {
 /* ---------------------------------------------------------------------- */
 
 function ContentSlide({ data, lang }) {
-  const t = (field) => field[lang];
+  const t = (field) => (field == null ? null : field[lang]);
 
   if (data.type === "hero") {
     return (
@@ -139,7 +166,8 @@ function ContentSlide({ data, lang }) {
         <h1 className="mb-6 font-serif text-4xl font-bold leading-tight text-[#eef3f2] md:text-6xl">
           {t(data.title)}
         </h1>
-        <p className="mb-10 max-w-2xl text-xl text-[#8fa9bd]">{t(data.subtitle)}</p>
+        <p className="mb-4 max-w-2xl text-xl text-[#8fa9bd]">{t(data.subtitle)}</p>
+        {data.credit && <p className="mb-8 font-mono text-xs text-[#8fa9bd]/60">{t(data.credit)}</p>}
         <div className="font-mono text-sm text-[#8fa9bd]/70">{t(data.hint)}</div>
       </Slide>
     );
@@ -158,6 +186,21 @@ function ContentSlide({ data, lang }) {
           ))}
         </Grid>
         <p className="mt-10 font-mono text-sm text-[#8fa9bd]">{t(data.thankYou)}</p>
+        {data.nextSteps && (
+          <div className="mt-6 w-full max-w-4xl border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-3.5">
+            <span className="mr-3 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#7ec6e6]">
+              {t(data.nextStepsTitle)}
+            </span>
+            <span className="font-mono text-xs text-[#8fa9bd]">
+              {data.nextSteps.map((s, i) => (
+                <span key={i}>
+                  {i > 0 && <span className="text-[#ff8a3d]"> &middot; </span>}
+                  {i + 1}. {t(s)}
+                </span>
+              ))}
+            </span>
+          </div>
+        )}
       </Slide>
     );
   }
@@ -165,7 +208,70 @@ function ContentSlide({ data, lang }) {
   if (data.type === "code") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
-        <CodeBlock>{data.code}</CodeBlock>
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          <div className="flex-1">
+            <CodeBlock>{codeText(data.code, lang)}</CodeBlock>
+          </div>
+          {data.sidePanels && (
+            <div className="flex flex-col gap-3 md:w-64 md:shrink-0">
+              {data.sidePanels.map((sp, i) =>
+                sp.title ? (
+                  <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-3.5">
+                    <div className="mb-1 font-mono text-xs font-semibold text-[#7ec6e6]">{t(sp.title)}</div>
+                    <div className="text-xs leading-relaxed text-[#8fa9bd]">{t(sp.body)}</div>
+                  </div>
+                ) : (
+                  <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-3.5 text-xs leading-relaxed text-[#8fa9bd]">
+                    {t(sp)}
+                  </div>
+                )
+              )}
+            </div>
+          )}
+        </div>
+        {data.note && <p className="mt-5 font-mono text-sm text-[#8fa9bd]/70">{t(data.note)}</p>}
+      </Slide>
+    );
+  }
+
+  if (data.type === "twocode") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          {data.blocks.map((b, i) => (
+            <div key={i} className="flex-1">
+              <div
+                className={`mb-2 font-mono text-xs font-semibold uppercase tracking-wide ${
+                  b.tone === "bad" ? "text-red-300" : b.tone === "good" ? "text-emerald-300" : "text-[#7ec6e6]"
+                }`}
+              >
+                {t(b.label)}
+              </div>
+              <CodeBlock>{codeText(b.code, lang)}</CodeBlock>
+            </div>
+          ))}
+        </div>
+        {data.note && <p className="mt-5 font-mono text-sm text-[#8fa9bd]/70">{t(data.note)}</p>}
+      </Slide>
+    );
+  }
+
+  if (data.type === "filetree") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+            {data.panels.map((p, i) => (
+              <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-4">
+                <div className="mb-1 font-mono text-sm font-semibold text-[#eef3f2]">{t(p.title)}</div>
+                <div className="text-xs leading-relaxed text-[#8fa9bd]">{t(p.body)}</div>
+              </div>
+            ))}
+          </div>
+          <div className="md:w-[360px] md:shrink-0">
+            <CodeBlock>{data.tree}</CodeBlock>
+          </div>
+        </div>
       </Slide>
     );
   }
@@ -221,9 +327,189 @@ function ContentSlide({ data, lang }) {
     );
   }
 
+  if (data.type === "architecture") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)}>
+        <div className="flex flex-col items-center">
+          {data.stages.map((s, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <FlowStep label={t(s.label)} sub={t(s.sub)} />
+              <FlowArrow vertical />
+            </div>
+          ))}
+          <div className="grid w-full max-w-3xl grid-cols-3 gap-4 border-t border-[#a0cde1]/20 pt-4">
+            {data.branches.map((b, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <FlowStep label={t(b.label)} sub={t(b.sub)} />
+                {i === data.branches.length - 1 && data.child && (
+                  <>
+                    <FlowArrow vertical />
+                    <FlowStep label={t(data.child.label)} sub={t(data.child.sub)} />
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+        {data.note && <p className="mt-6 max-w-4xl font-mono text-xs text-[#8fa9bd]/70">{t(data.note)}</p>}
+      </Slide>
+    );
+  }
+
+  if (data.type === "landscape") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+        <div className="w-full space-y-3">
+          {data.categories.map((c, i) => (
+            <div
+              key={i}
+              className="flex flex-col gap-3 border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-4 md:flex-row md:items-center md:gap-6"
+            >
+              <div className="md:w-56 md:shrink-0">
+                <div className="font-serif font-bold text-[#eef3f2]">{t(c.title)}</div>
+                <div className="text-xs italic text-[#8fa9bd]">{t(c.desc)}</div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {c.tools.map((tool) => (
+                  <Chip key={tool}>{tool}</Chip>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        {data.note && <p className="mt-5 font-mono text-xs text-[#8fa9bd]/60">{t(data.note)}</p>}
+      </Slide>
+    );
+  }
+
+  if (data.type === "pitfalls") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+        <Grid cols={data.cols}>
+          {data.panels.map((p, i) => (
+            <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6">
+              <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(p.title)}</h3>
+              <div className="mb-2 text-sm leading-relaxed text-[#8fa9bd]">
+                <span className="mr-1 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#ff8a3d]">
+                  {UI.problem[lang]}:
+                </span>
+                {t(p.problem)}
+              </div>
+              <div className="text-sm leading-relaxed text-[#8fa9bd]">
+                <span className="mr-1 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#7ec6e6]">
+                  {UI.solution[lang]}:
+                </span>
+                {t(p.solution)}
+              </div>
+            </div>
+          ))}
+        </Grid>
+      </Slide>
+    );
+  }
+
+  if (data.type === "stats") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
+          {data.tiles.map((s, i) => (
+            <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-5 text-center">
+              <div className="font-serif text-3xl font-bold text-[#7ec6e6] md:text-4xl">{s.value}</div>
+              <div className="mt-1 text-sm text-[#eef3f2]">{t(s.label)}</div>
+              <div className="mt-2 font-mono text-[10px] text-[#8fa9bd]">{t(s.sub)}</div>
+            </div>
+          ))}
+        </div>
+        {data.highlight && (
+          <div className="mt-5 flex flex-col items-center gap-2 border border-[#ff8a3d]/40 bg-[#ff8a3d]/5 px-6 py-5 text-center md:flex-row md:justify-center md:gap-4">
+            <div className="font-serif text-2xl font-bold text-[#ff8a3d] md:text-3xl">{data.highlight.value}</div>
+            <div className="text-sm text-[#8fa9bd]">{t(data.highlight.desc)}</div>
+          </div>
+        )}
+        {data.wins && (
+          <div className="mt-6 w-full">
+            <div className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#7ec6e6]">
+              {t(data.winsTitle)}
+            </div>
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              {data.wins.map((w, i) => (
+                <div key={i} className="flex items-start gap-2 text-sm text-[#8fa9bd]">
+                  <span className="font-mono text-emerald-300">&#10003;</span>
+                  {t(w)}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Slide>
+    );
+  }
+
+  if (data.type === "casestudy") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)}>
+        <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6">
+            <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.backgroundTitle)}</h3>
+            <BulletList items={data.background.map(t)} />
+          </div>
+          <div>
+            <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.challengesTitle)}</h3>
+            <div className="border border-[#a0cde1]/20">
+              {data.challenges.map((c, i) => (
+                <div
+                  key={i}
+                  className={`grid grid-cols-2 gap-4 px-4 py-3 text-sm ${
+                    i % 2 === 0 ? "bg-[#0e2038]/40" : ""
+                  } ${i < data.challenges.length - 1 ? "border-b border-[#a0cde1]/20" : ""}`}
+                >
+                  <div className="font-semibold text-[#eef3f2]">{t(c.problem)}</div>
+                  <div className="text-[#8fa9bd]">{t(c.impact)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Slide>
+    );
+  }
+
+  if (data.type === "compare") {
+    return (
+      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+        <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6">
+            <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.sharedTitle)}</h3>
+            <BulletList items={data.shared.map(t)} />
+          </div>
+          <div>
+            <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.uniqueTitle)}</h3>
+            <div className="space-y-3">
+              {data.uniquePanels.map((p, i) => (
+                <Panel key={i} title={t(p.title)}>
+                  {t(p.body)}
+                </Panel>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Slide>
+    );
+  }
+
   // type === "grid" (the common case)
   return (
-    <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
+    <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={data.stat ? null : t(data.lede)}>
+      {data.stat && (
+        <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-stretch">
+          <p className="flex-1 text-lg leading-relaxed text-[#8fa9bd]">{t(data.lede)}</p>
+          <div className="w-full shrink-0 border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6 text-center md:w-64">
+            <div className="font-serif text-5xl font-bold text-[#7ec6e6]">{data.stat.value}</div>
+            <div className="mt-2 text-sm text-[#8fa9bd]">{t(data.stat.label)}</div>
+            <div className="mt-3 font-mono text-[10px] text-[#8fa9bd]/60">{t(data.stat.source)}</div>
+          </div>
+        </div>
+      )}
       <Grid cols={data.cols}>
         {data.panels.map((p, i) => (
           <Panel key={i} title={t(p.title)}>
