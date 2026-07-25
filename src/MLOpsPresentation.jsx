@@ -32,7 +32,7 @@ function Lede({ children }) {
 
 function Panel({ title, children }) {
   return (
-    <div className="relative rounded-none border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6 backdrop-blur-sm">
+    <div className="relative rounded-none border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#7ec6e6]/50 hover:shadow-[0_10px_28px_-8px_rgba(126,198,230,0.25)]">
       {title && (
         <h3 className="mb-2 font-serif text-lg font-bold text-[#eef3f2]">{title}</h3>
       )}
@@ -49,7 +49,7 @@ function Grid({ children, cols = 3 }) {
   }[cols];
   const items = Array.isArray(children) ? children : [children];
   return (
-    <div className={`grid grid-cols-1 ${colClass} gap-5 w-full`}>
+    <div className={`stagger grid grid-cols-1 ${colClass} gap-5 w-full`}>
       {items.map((child, i) => (
         <div key={i} className="relative">
           <div className="pointer-events-none absolute -top-2.5 left-5 z-10 bg-[#0e2038] px-1 font-mono text-[10px] tracking-wider text-[#ff8a3d]">
@@ -73,7 +73,7 @@ function Bullet({ children }) {
 
 function BulletList({ items }) {
   return (
-    <ul className="space-y-2.5">
+    <ul className="stagger space-y-2.5">
       {items.map((item, i) => (
         <Bullet key={i}>{item}</Bullet>
       ))}
@@ -83,7 +83,7 @@ function BulletList({ items }) {
 
 function Chip({ children }) {
   return (
-    <span className="inline-block border border-[#a0cde1]/25 px-2.5 py-1 font-mono text-[11px] text-[#eef3f2]">
+    <span className="inline-block border border-[#a0cde1]/25 px-2.5 py-1 font-mono text-[11px] text-[#eef3f2] transition-colors duration-200 hover:border-[#7ec6e6]/60 hover:bg-[#7ec6e6]/10">
       {children}
     </span>
   );
@@ -91,7 +91,7 @@ function Chip({ children }) {
 
 function TagList({ items }) {
   return (
-    <div className="mb-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#8fa9bd]">
+    <div className="stagger mb-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#8fa9bd]">
       {items.map((item, i) => (
         <span key={i}>
           <span className="text-[#ff8a3d]">&#9671; </span>
@@ -112,7 +112,7 @@ function Tag({ children }) {
 
 function FlowStep({ label, sub }) {
   return (
-    <div className="flex min-w-[120px] flex-col items-center justify-center border border-[#a0cde1]/20 bg-[#0e2038]/40 px-4 py-3 text-center">
+    <div className="flex min-w-[120px] flex-col items-center justify-center border border-[#a0cde1]/20 bg-[#0e2038]/40 px-4 py-3 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-[#7ec6e6]/50">
       <span className="font-mono text-sm font-medium text-[#eef3f2]">{label}</span>
       {sub && <span className="mt-1 font-mono text-xs text-[#8fa9bd]">{sub}</span>}
     </div>
@@ -168,7 +168,7 @@ function ContentSlide({ data, lang }) {
         </h1>
         <p className="mb-4 max-w-2xl text-xl text-[#8fa9bd]">{t(data.subtitle)}</p>
         {data.credit && <p className="mb-8 font-mono text-xs text-[#8fa9bd]/60">{t(data.credit)}</p>}
-        <div className="font-mono text-sm text-[#8fa9bd]/70">{t(data.hint)}</div>
+        <div className="blink-cursor font-mono text-sm text-[#8fa9bd]/70">{t(data.hint)}</div>
       </Slide>
     );
   }
@@ -260,9 +260,9 @@ function ContentSlide({ data, lang }) {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
         <div className="flex w-full flex-col gap-5 md:flex-row">
-          <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="stagger grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
             {data.panels.map((p, i) => (
-              <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-4">
+              <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#7ec6e6]/50">
                 <div className="mb-1 font-mono text-sm font-semibold text-[#eef3f2]">{t(p.title)}</div>
                 <div className="text-xs leading-relaxed text-[#8fa9bd]">{t(p.body)}</div>
               </div>
@@ -279,11 +279,11 @@ function ContentSlide({ data, lang }) {
   if (data.type === "levels") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
-        <div className="w-full max-w-3xl space-y-3">
+        <div className="stagger w-full max-w-3xl space-y-3">
           {data.levels.map((lvl, i) => (
             <div
               key={i}
-              className="flex items-center gap-4 border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-4"
+              className="flex items-center gap-4 border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#7ec6e6]/50 hover:shadow-[0_10px_28px_-8px_rgba(126,198,230,0.2)]"
             >
               <Tag>{t(lvl.tag)}</Tag>
               <div>
@@ -300,7 +300,7 @@ function ContentSlide({ data, lang }) {
   if (data.type === "flow") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
-        <div className="mb-6 flex flex-wrap items-center gap-3">
+        <div className="stagger mb-6 flex flex-wrap items-center gap-3">
           {data.steps.map((step, i) => (
             <div key={i} className="flex items-center gap-3">
               <FlowStep label={t(step.label)} sub={t(step.sub)} />
@@ -330,14 +330,14 @@ function ContentSlide({ data, lang }) {
   if (data.type === "architecture") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)}>
-        <div className="flex flex-col items-center">
+        <div className="stagger flex flex-col items-center">
           {data.stages.map((s, i) => (
             <div key={i} className="flex flex-col items-center">
               <FlowStep label={t(s.label)} sub={t(s.sub)} />
               <FlowArrow vertical />
             </div>
           ))}
-          <div className="grid w-full max-w-3xl grid-cols-3 gap-4 border-t border-[#a0cde1]/20 pt-4">
+          <div className="stagger grid w-full max-w-3xl grid-cols-3 gap-4 border-t border-[#a0cde1]/20 pt-4">
             {data.branches.map((b, i) => (
               <div key={i} className="flex flex-col items-center">
                 <FlowStep label={t(b.label)} sub={t(b.sub)} />
@@ -359,11 +359,11 @@ function ContentSlide({ data, lang }) {
   if (data.type === "landscape") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
-        <div className="w-full space-y-3">
+        <div className="stagger w-full space-y-3">
           {data.categories.map((c, i) => (
             <div
               key={i}
-              className="flex flex-col gap-3 border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-4 md:flex-row md:items-center md:gap-6"
+              className="flex flex-col gap-3 border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#7ec6e6]/50 md:flex-row md:items-center md:gap-6"
             >
               <div className="md:w-56 md:shrink-0">
                 <div className="font-serif font-bold text-[#eef3f2]">{t(c.title)}</div>
@@ -387,7 +387,7 @@ function ContentSlide({ data, lang }) {
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
         <Grid cols={data.cols}>
           {data.panels.map((p, i) => (
-            <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6">
+            <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#7ec6e6]/50 hover:shadow-[0_10px_28px_-8px_rgba(126,198,230,0.25)]">
               <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(p.title)}</h3>
               <div className="mb-2 text-sm leading-relaxed text-[#8fa9bd]">
                 <span className="mr-1 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#ff8a3d]">
@@ -411,9 +411,9 @@ function ContentSlide({ data, lang }) {
   if (data.type === "stats") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
-        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="stagger grid w-full grid-cols-2 gap-4 md:grid-cols-4">
           {data.tiles.map((s, i) => (
-            <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-5 text-center">
+            <div key={i} className="border border-[#a0cde1]/20 bg-[#0e2038]/40 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#7ec6e6]/50 hover:shadow-[0_10px_28px_-8px_rgba(126,198,230,0.25)]">
               <div className="font-serif text-3xl font-bold text-[#7ec6e6] md:text-4xl">{s.value}</div>
               <div className="mt-1 text-sm text-[#eef3f2]">{t(s.label)}</div>
               <div className="mt-2 font-mono text-[10px] text-[#8fa9bd]">{t(s.sub)}</div>
@@ -431,7 +431,7 @@ function ContentSlide({ data, lang }) {
             <div className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#7ec6e6]">
               {t(data.winsTitle)}
             </div>
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+            <div className="stagger grid grid-cols-1 gap-2 md:grid-cols-2">
               {data.wins.map((w, i) => (
                 <div key={i} className="flex items-start gap-2 text-sm text-[#8fa9bd]">
                   <span className="font-mono text-emerald-300">&#10003;</span>
@@ -455,11 +455,11 @@ function ContentSlide({ data, lang }) {
           </div>
           <div>
             <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.challengesTitle)}</h3>
-            <div className="border border-[#a0cde1]/20">
+            <div className="stagger border border-[#a0cde1]/20">
               {data.challenges.map((c, i) => (
                 <div
                   key={i}
-                  className={`grid grid-cols-2 gap-4 px-4 py-3 text-sm ${
+                  className={`grid grid-cols-2 gap-4 px-4 py-3 text-sm transition-colors duration-200 hover:bg-[#7ec6e6]/10 ${
                     i % 2 === 0 ? "bg-[#0e2038]/40" : ""
                   } ${i < data.challenges.length - 1 ? "border-b border-[#a0cde1]/20" : ""}`}
                 >
@@ -484,7 +484,7 @@ function ContentSlide({ data, lang }) {
           </div>
           <div>
             <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.uniqueTitle)}</h3>
-            <div className="space-y-3">
+            <div className="stagger space-y-3">
               {data.uniquePanels.map((p, i) => (
                 <Panel key={i} title={t(p.title)}>
                   {t(p.body)}
@@ -563,15 +563,18 @@ function QuizSlide({ q, index, total, lang }) {
           const letter = "ABCD"[i];
           const isCorrect = i === displayCorrect;
           const isSelected = i === selected;
-          let stateClasses = "border-[#a0cde1]/20 bg-[#0e2038]/40 hover:border-[#7ec6e6]/50";
+          let stateClasses = "border-[#a0cde1]/20 bg-[#0e2038]/40 hover:border-[#7ec6e6]/50 hover:-translate-y-0.5";
           let badge = null;
+          let extraAnim = "";
           if (answered) {
             if (isCorrect) {
               stateClasses = "border-emerald-400/60 bg-emerald-500/10";
-              badge = <span className="font-mono text-emerald-300">&#10003;</span>;
+              badge = <span className="font-mono text-emerald-300 animate-pop">&#10003;</span>;
+              extraAnim = "animate-glow-correct";
             } else if (isSelected) {
               stateClasses = "border-red-400/60 bg-red-500/10";
-              badge = <span className="font-mono text-red-300">&#10007;</span>;
+              badge = <span className="font-mono text-red-300 animate-pop">&#10007;</span>;
+              extraAnim = "animate-shake";
             } else {
               stateClasses = "border-[#a0cde1]/10 bg-[#0e2038]/20 opacity-40";
             }
@@ -582,7 +585,7 @@ function QuizSlide({ q, index, total, lang }) {
               type="button"
               disabled={answered}
               onClick={() => setSelected(i)}
-              className={`flex items-start gap-3 border p-4 text-left transition-colors disabled:cursor-default ${stateClasses}`}
+              className={`flex items-start gap-3 border p-4 text-left transition-all disabled:cursor-default ${stateClasses} ${extraAnim}`}
             >
               <span className="font-mono text-xs font-semibold text-[#7ec6e6]">{letter}</span>
               <span className="flex-1 text-sm leading-relaxed text-[#eef3f2]">{t(opt)}</span>
@@ -593,7 +596,7 @@ function QuizSlide({ q, index, total, lang }) {
       </div>
       {answered && (
         <div
-          className={`mt-6 max-w-3xl border-l-2 pl-4 text-sm leading-relaxed ${
+          className={`slide-enter mt-6 max-w-3xl border-l-2 pl-4 text-sm leading-relaxed ${
             selected === displayCorrect ? "border-emerald-400/60 text-emerald-200" : "border-red-400/60 text-red-200"
           }`}
         >
@@ -637,13 +640,16 @@ function slideLabel(slide, lang) {
 function Presentation() {
   const { lang } = useLang();
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
   const total = SLIDES.length;
 
   const goTo = useCallback(
     (index) => {
-      setCurrent(Math.min(Math.max(index, 0), total - 1));
+      const clamped = Math.min(Math.max(index, 0), total - 1);
+      setDirection(clamped >= current ? 1 : -1);
+      setCurrent(clamped);
     },
-    [total]
+    [total, current]
   );
 
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
@@ -692,13 +698,13 @@ function Presentation() {
 
       <div className="relative h-[2px] w-full bg-[#a0cde1]/15">
         <div
-          className="h-full bg-[#7ec6e6] transition-all duration-300"
+          className="progress-fill h-full transition-all duration-300"
           style={{ width: `${((current + 1) / total) * 100}%` }}
         />
       </div>
 
       <div className="relative flex-1 overflow-y-auto">
-        <div key={current} className="slide-enter h-full">
+        <div key={current} className={`h-full ${direction === -1 ? "slide-enter-prev" : "slide-enter-next"}`}>
           {slide.kind === "quiz" ? (
             <QuizSlide q={slide.data} index={slide.quizIndex} total={QUIZ.length} lang={lang} />
           ) : (
@@ -711,7 +717,7 @@ function Presentation() {
         <button
           onClick={prev}
           disabled={current === 0}
-          className="whitespace-nowrap border border-[#a0cde1]/20 px-4 py-2 text-[11px] uppercase tracking-wide text-[#eef3f2] transition-colors hover:bg-[#a0cde1]/10 disabled:opacity-30"
+          className="whitespace-nowrap border border-[#a0cde1]/20 px-4 py-2 text-[11px] uppercase tracking-wide text-[#eef3f2] transition-all hover:-translate-x-0.5 hover:bg-[#a0cde1]/10 active:translate-x-0 disabled:opacity-30 disabled:hover:translate-x-0"
         >
           &lsaquo; {UI.prev[lang]}
         </button>
@@ -744,7 +750,7 @@ function Presentation() {
           <button
             onClick={next}
             disabled={current === total - 1}
-            className="whitespace-nowrap border border-[#a0cde1]/20 px-4 py-2 text-[11px] uppercase tracking-wide text-[#eef3f2] transition-colors hover:bg-[#a0cde1]/10 disabled:opacity-30"
+            className="whitespace-nowrap border border-[#a0cde1]/20 px-4 py-2 text-[11px] uppercase tracking-wide text-[#eef3f2] transition-all hover:translate-x-0.5 hover:bg-[#a0cde1]/10 active:translate-x-0 disabled:opacity-30 disabled:hover:translate-x-0"
           >
             {UI.next[lang]} &rsaquo;
           </button>

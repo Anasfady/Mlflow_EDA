@@ -36,8 +36,135 @@ body {
   animation: slide-fade-in 0.4s ease both;
 }
 
+/* Directional slide transitions: forward feels like advancing, back like rewinding */
+@keyframes slide-in-next {
+  from {
+    opacity: 0;
+    transform: translateX(48px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slide-in-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-48px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.slide-enter-next {
+  animation: slide-in-next 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.slide-enter-prev {
+  animation: slide-in-prev 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Staggered entrance for grouped children (grids, bullet lists, chip rows, etc.) */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger > * {
+  opacity: 0;
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0.03s; }
+.stagger > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger > *:nth-child(3) { animation-delay: 0.13s; }
+.stagger > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger > *:nth-child(5) { animation-delay: 0.23s; }
+.stagger > *:nth-child(6) { animation-delay: 0.28s; }
+.stagger > *:nth-child(7) { animation-delay: 0.33s; }
+.stagger > *:nth-child(8) { animation-delay: 0.38s; }
+.stagger > *:nth-child(9) { animation-delay: 0.43s; }
+.stagger > *:nth-child(10) { animation-delay: 0.48s; }
+.stagger > *:nth-child(n + 11) { animation-delay: 0.52s; }
+
+/* Progress bar: soft shimmering sweep so it reads as "alive" rather than static */
+@keyframes progress-shimmer {
+  0% { background-position: -80px 0; }
+  100% { background-position: 160px 0; }
+}
+
+.progress-fill {
+  background-image: linear-gradient(90deg, #6bb6d9 0%, #b9e6f7 50%, #6bb6d9 100%);
+  background-size: 80px 100%;
+  animation: progress-shimmer 1.8s linear infinite;
+}
+
+/* Quiz feedback micro-interactions */
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.45s ease;
+  opacity: 1;
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  65% { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.animate-pop {
+  animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes glow-correct {
+  0%, 100% { box-shadow: 0 0 0 rgba(52, 211, 153, 0); }
+  50% { box-shadow: 0 0 18px rgba(52, 211, 153, 0.45); }
+}
+
+.animate-glow-correct {
+  animation: glow-correct 0.7s ease;
+  opacity: 1;
+}
+
+/* Blinking terminal-style cursor for the hero hint */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.blink-cursor::after {
+  content: "_";
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .slide-enter {
-    animation: none;
+  .slide-enter,
+  .slide-enter-next,
+  .slide-enter-prev,
+  .stagger > *,
+  .progress-fill,
+  .animate-shake,
+  .animate-pop,
+  .animate-glow-correct,
+  .blink-cursor::after {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 }
