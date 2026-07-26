@@ -9,6 +9,7 @@ export const UI = {
   quiz: { en: "Quiz", es: "Cuestionario" },
   problem: { en: "Problem", es: "Problema" },
   solution: { en: "Solution", es: "Solución" },
+  downloadPdf: { en: "Download PDF", es: "Descargar PDF" },
 };
 
 function codeText(field, lang) {
@@ -39,7 +40,10 @@ export const DECK = [
       en: "Adapted from an article by Yadidiah Kanaparthi",
       es: "Adaptado de un artículo de Yadidiah Kanaparthi",
     },
-    hint: { en: "Use ← → or Space to navigate", es: "Usa ← → o Espacio para navegar" },
+    hint: {
+      en: "Use ← → or Space to navigate",
+      es: "Usa ← → o Espacio para navegar",
+    },
   },
 
   /* ---------------------------- 01 · Foundations ---------------------- */
@@ -83,7 +87,10 @@ export const DECK = [
     type: "compare",
     section: 1,
     eyebrow: { en: "01 · Foundations", es: "01 · Fundamentos" },
-    title: { en: "MLOps vs. DevOps: What's Different", es: "MLOps vs. DevOps: Qué Cambia" },
+    title: {
+      en: "MLOps vs. DevOps: What's Different",
+      es: "MLOps vs. DevOps: Qué Cambia",
+    },
     lede: {
       en: "MLOps grew out of DevOps — but machine learning introduces failure modes software engineering doesn't have.",
       es: "MLOps surgió de DevOps, pero el machine learning introduce modos de fallo que la ingeniería de software tradicional no tiene.",
@@ -91,10 +98,19 @@ export const DECK = [
     sharedTitle: { en: "Shared Principles", es: "Principios Compartidos" },
     shared: [
       { en: "Process automation", es: "Automatización de procesos" },
-      { en: "Continuous integration & deployment", es: "Integración y despliegue continuos" },
-      { en: "Collaboration & communication", es: "Colaboración y comunicación" },
+      {
+        en: "Continuous integration & deployment",
+        es: "Integración y despliegue continuos",
+      },
+      {
+        en: "Collaboration & communication",
+        es: "Colaboración y comunicación",
+      },
       { en: "Scalability & reliability", es: "Escalabilidad y confiabilidad" },
-      { en: "Monitoring & feedback loops", es: "Monitoreo y ciclos de retroalimentación" },
+      {
+        en: "Monitoring & feedback loops",
+        es: "Monitoreo y ciclos de retroalimentación",
+      },
     ],
     uniqueTitle: { en: "Unique to MLOps", es: "Exclusivo de MLOps" },
     uniquePanels: [
@@ -106,7 +122,10 @@ export const DECK = [
         },
       },
       {
-        title: { en: "Scaling Training & Inference", es: "Escalar Entrenamiento e Inferencia" },
+        title: {
+          en: "Scaling Training & Inference",
+          es: "Escalar Entrenamiento e Inferencia",
+        },
         body: {
           en: "Training needs specialized hardware (GPUs); serving must stay fast and cheap enough to be worth it.",
           es: "El entrenamiento necesita hardware especializado (GPUs); el servicio debe ser rápido y barato para que valga la pena.",
@@ -126,13 +145,6 @@ export const DECK = [
           es: "Investigadores e ingenieros de producción tienen habilidades y ritmos distintos; deben aprender a trabajar juntos.",
         },
       },
-      {
-        title: { en: "Complex Deployment Pipelines", es: "Pipelines de Despliegue Complejos" },
-        body: {
-          en: "Pipelines must validate data and schemas, not just code, and often automate retraining itself.",
-          es: "Los pipelines deben validar datos y esquemas, no solo código, y a menudo automatizan el propio reentrenamiento.",
-        },
-      },
     ],
   },
   {
@@ -147,13 +159,19 @@ export const DECK = [
     },
     stat: {
       value: "85%",
-      label: { en: "of ML projects never reach production", es: "de los proyectos de ML nunca llegan a producción" },
+      label: {
+        en: "of ML projects never reach production",
+        es: "de los proyectos de ML nunca llegan a producción",
+      },
       source: { en: "— Gartner, 2023", es: "— Gartner, 2023" },
     },
     cols: 2,
     panels: [
       {
-        title: { en: "The prototype-to-production gap", es: "La brecha entre prototipo y producción" },
+        title: {
+          en: "The prototype-to-production gap",
+          es: "La brecha entre prototipo y producción",
+        },
         body: {
           en: "Notebooks don't version data, don't handle failure, and don't tell you when they're wrong in production.",
           es: "Los notebooks no versionan datos, no manejan fallos y no avisan cuando se equivocan en producción.",
@@ -177,7 +195,7 @@ export const DECK = [
         title: { en: "Reproducibility debt", es: "Deuda de reproducibilidad" },
         body: {
           en: 'Without versioned data, code, and config, "it worked on my machine" becomes "it worked once, three months ago."',
-          es: 'Sin datos, código y configuración versionados, «funcionó en mi máquina» se convierte en «funcionó una vez, hace tres meses».',
+          es: "Sin datos, código y configuración versionados, «funcionó en mi máquina» se convierte en «funcionó una vez, hace tres meses».",
         },
       },
     ],
@@ -187,18 +205,39 @@ export const DECK = [
     type: "flow",
     section: 1,
     eyebrow: { en: "01 · Foundations", es: "01 · Fundamentos" },
-    title: { en: "The ML Lifecycle Is a Loop", es: "El Ciclo de Vida del ML Es un Bucle" },
+    title: {
+      en: "The ML Lifecycle Is a Loop",
+      es: "El Ciclo de Vida del ML Es un Bucle",
+    },
     lede: {
       en: 'Unlike traditional software, the lifecycle never really ends at "deploy." Production feedback continuously reshapes the next iteration.',
       es: "A diferencia del software tradicional, el ciclo de vida nunca termina realmente en el «despliegue». La retroalimentación de producción reconfigura continuamente la siguiente iteración.",
     },
     steps: [
-      { label: { en: "Collect", es: "Recolectar" }, sub: { en: "raw data", es: "datos crudos" } },
-      { label: { en: "Prepare", es: "Preparar" }, sub: { en: "clean & featurize", es: "limpiar y crear variables" } },
-      { label: { en: "Train", es: "Entrenar" }, sub: { en: "experiment", es: "experimentar" } },
-      { label: { en: "Evaluate", es: "Evaluar" }, sub: { en: "validate", es: "validar" } },
-      { label: { en: "Deploy", es: "Desplegar" }, sub: { en: "serve", es: "servir" } },
-      { label: { en: "Monitor", es: "Monitorear" }, sub: { en: "observe", es: "observar" } },
+      {
+        label: { en: "Collect", es: "Recolectar" },
+        sub: { en: "raw data", es: "datos crudos" },
+      },
+      {
+        label: { en: "Prepare", es: "Preparar" },
+        sub: { en: "clean & featurize", es: "limpiar y crear variables" },
+      },
+      {
+        label: { en: "Train", es: "Entrenar" },
+        sub: { en: "experiment", es: "experimentar" },
+      },
+      {
+        label: { en: "Evaluate", es: "Evaluar" },
+        sub: { en: "validate", es: "validar" },
+      },
+      {
+        label: { en: "Deploy", es: "Desplegar" },
+        sub: { en: "serve", es: "servir" },
+      },
+      {
+        label: { en: "Monitor", es: "Monitorear" },
+        sub: { en: "observe", es: "observar" },
+      },
     ],
     loopNote: {
       en: "Retraining feeds back into Collect & Prepare",
@@ -254,7 +293,10 @@ export const DECK = [
     type: "grid",
     section: 2,
     eyebrow: { en: "02 · Reproducibility", es: "02 · Reproducibilidad" },
-    title: { en: "Data Versioning & Lineage", es: "Versionado de Datos y Linaje" },
+    title: {
+      en: "Data Versioning & Lineage",
+      es: "Versionado de Datos y Linaje",
+    },
     lede: {
       en: 'Code review answers "what changed and why." Data needs the same answer — which snapshot, transformed how, by which job.',
       es: "La revisión de código responde «qué cambió y por qué». Los datos necesitan la misma respuesta: qué instantánea, transformada cómo, por qué proceso.",
@@ -322,7 +364,10 @@ dvc repro`,
         },
       },
       {
-        label: { en: "dvc.yaml — pipeline definition", es: "dvc.yaml — definición del pipeline" },
+        label: {
+          en: "dvc.yaml — pipeline definition",
+          es: "dvc.yaml — definición del pipeline",
+        },
         code: `stages:
   preprocess:
     cmd: python src/data/preprocessing.py
@@ -426,7 +471,10 @@ dvc repro`,
     type: "code",
     section: 3,
     eyebrow: { en: "03 · Experimentation", es: "03 · Experimentación" },
-    title: { en: "MLflow in Action: Track Everything", es: "MLflow en Acción: Registra Todo" },
+    title: {
+      en: "MLflow in Action: Track Everything",
+      es: "MLflow en Acción: Registra Todo",
+    },
     lede: {
       en: "A config-driven training function logs params, metrics, and the model itself on every run.",
       es: "Una función de entrenamiento basada en configuración registra parámetros, métricas y el propio modelo en cada ejecución.",
@@ -500,10 +548,13 @@ dvc repro`,
     type: "filetree",
     section: 3,
     eyebrow: { en: "03 · Experimentation", es: "03 · Experimentación" },
-    title: { en: "Stop Using Flat Notebooks", es: "Basta de Notebooks Sueltos" },
+    title: {
+      en: "How to format your Ready-Production Project",
+      es: "Cómo formatear su proyecto listo para Producción",
+    },
     lede: {
-      en: "A production-ready project separates concerns — data, source code, configs, and tests each get their own home.",
-      es: "Un proyecto listo para producción separa responsabilidades: datos, código fuente, configuración y pruebas, cada uno con su propio lugar.",
+      en: " Stop using flat notebooks, A production-ready project separates concerns — data, source code, configs, and tests each get their own home.",
+      es: "Deja de usar notebooks planos, Un proyecto listo para producción separa responsabilidades: datos, código fuente, configuración y pruebas, cada uno con su propio lugar.",
     },
     panels: [
       {
@@ -515,7 +566,10 @@ dvc repro`,
       },
       {
         title: { en: "src/", es: "src/" },
-        body: { en: "data, features, models, evaluation code", es: "código de datos, variables, modelos y evaluación" },
+        body: {
+          en: "data, features, models, evaluation code",
+          es: "código de datos, variables, modelos y evaluación",
+        },
       },
       {
         title: { en: "configs/", es: "configs/" },
@@ -526,15 +580,24 @@ dvc repro`,
       },
       {
         title: { en: "tests/", es: "tests/" },
-        body: { en: "automated validation for code and data", es: "validación automatizada de código y datos" },
+        body: {
+          en: "automated validation for code and data",
+          es: "validación automatizada de código y datos",
+        },
       },
       {
         title: { en: "notebooks/", es: "notebooks/" },
-        body: { en: "exploration only — never production logic", es: "solo para exploración, nunca lógica de producción" },
+        body: {
+          en: "exploration only — never production logic",
+          es: "solo para exploración, nunca lógica de producción",
+        },
       },
       {
         title: { en: "dvc.yaml", es: "dvc.yaml" },
-        body: { en: "reproducible pipeline definition", es: "definición reproducible del pipeline" },
+        body: {
+          en: "reproducible pipeline definition",
+          es: "definición reproducible del pipeline",
+        },
       },
     ],
     tree: `ml-project/
@@ -648,16 +711,31 @@ jobs:
     type: "flow",
     section: 4,
     eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: { en: "Model Registry & Governance", es: "Registro de Modelos y Gobernanza" },
+    title: {
+      en: "Model Registry & Governance",
+      es: "Registro de Modelos y Gobernanza",
+    },
     lede: {
       en: "A central, versioned catalog of models — with stage transitions that require approval before something reaches production.",
       es: "Un catálogo central y versionado de modelos, con transiciones de etapa que requieren aprobación antes de llegar a producción.",
     },
     steps: [
-      { label: { en: "None", es: "Ninguno" }, sub: { en: "registered", es: "registrado" } },
-      { label: { en: "Staging", es: "Staging" }, sub: { en: "under review", es: "en revisión" } },
-      { label: { en: "Production", es: "Producción" }, sub: { en: "serving traffic", es: "sirviendo tráfico" } },
-      { label: { en: "Archived", es: "Archivado" }, sub: { en: "retired", es: "retirado" } },
+      {
+        label: { en: "None", es: "Ninguno" },
+        sub: { en: "registered", es: "registrado" },
+      },
+      {
+        label: { en: "Staging", es: "Staging" },
+        sub: { en: "under review", es: "en revisión" },
+      },
+      {
+        label: { en: "Production", es: "Producción" },
+        sub: { en: "serving traffic", es: "sirviendo tráfico" },
+      },
+      {
+        label: { en: "Archived", es: "Archivado" },
+        sub: { en: "retired", es: "retirado" },
+      },
     ],
     cols: 2,
     panels: [
@@ -682,18 +760,33 @@ jobs:
     type: "architecture",
     section: 4,
     eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: { en: "Architecture of a Production ML System", es: "Arquitectura de un Sistema de ML en Producción" },
+    title: {
+      en: "Architecture of a Production ML System",
+      es: "Arquitectura de un Sistema de ML en Producción",
+    },
     stages: [
       { label: { en: "Data Sources", es: "Fuentes de Datos" } },
-      { label: { en: "Data Pipeline", es: "Pipeline de Datos" }, sub: { en: "Airflow / DVC", es: "Airflow / DVC" } },
-      { label: { en: "Feature Store", es: "Feature Store" }, sub: { en: "Feast", es: "Feast" } },
+      {
+        label: { en: "Data Pipeline", es: "Pipeline de Datos" },
+        sub: { en: "Airflow / DVC", es: "Airflow / DVC" },
+      },
+      {
+        label: { en: "Feature Store", es: "Feature Store" },
+        sub: { en: "Feast", es: "Feast" },
+      },
     ],
     branches: [
       { label: { en: "MLflow Tracking", es: "Seguimiento MLflow" } },
       { label: { en: "Model Registry", es: "Registro de Modelos" } },
-      { label: { en: "Model Serving", es: "Servicio del Modelo" }, sub: { en: "FastAPI", es: "FastAPI" } },
+      {
+        label: { en: "Model Serving", es: "Servicio del Modelo" },
+        sub: { en: "FastAPI", es: "FastAPI" },
+      },
     ],
-    child: { label: { en: "Monitoring", es: "Monitoreo" }, sub: { en: "Prometheus / Grafana", es: "Prometheus / Grafana" } },
+    child: {
+      label: { en: "Monitoring", es: "Monitoreo" },
+      sub: { en: "Prometheus / Grafana", es: "Prometheus / Grafana" },
+    },
     note: {
       en: "Feature stores prevent skew · Model registry gives version control + staging/production lifecycle · FastAPI serves predictions · Monitoring catches drift & failures",
       es: "Los feature stores evitan el skew · El registro de modelos aporta control de versiones y ciclo de vida staging/producción · FastAPI sirve las predicciones · El monitoreo detecta drift y fallos",
@@ -704,7 +797,10 @@ jobs:
     type: "landscape",
     section: 4,
     eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: { en: "The MLOps Tool Landscape", es: "El Panorama de Herramientas de MLOps" },
+    title: {
+      en: "The MLOps Tool Landscape",
+      es: "El Panorama de Herramientas de MLOps",
+    },
     lede: {
       en: "Beyond MLflow and DVC — a broader ecosystem covers every stage of the ML lifecycle.",
       es: "Más allá de MLflow y DVC: un ecosistema más amplio cubre cada etapa del ciclo de vida del ML.",
@@ -712,28 +808,46 @@ jobs:
     categories: [
       {
         title: { en: "Notebooks & Frameworks", es: "Notebooks y Frameworks" },
-        desc: { en: "prototype models and write the training code", es: "prototipar modelos y escribir el código de entrenamiento" },
+        desc: {
+          en: "prototype models and write the training code",
+          es: "prototipar modelos y escribir el código de entrenamiento",
+        },
         tools: ["Jupyter", "TensorFlow", "PyTorch"],
       },
       {
         title: { en: "Experiment Tracking", es: "Seguimiento de Experimentos" },
-        desc: { en: "log runs, metrics, and artifacts", es: "registra ejecuciones, métricas y artefactos" },
+        desc: {
+          en: "log runs, metrics, and artifacts",
+          es: "registra ejecuciones, métricas y artefactos",
+        },
         tools: ["MLflow", "Weights & Biases"],
       },
       {
-        title: { en: "Orchestration & Pipelines", es: "Orquestación y Pipelines" },
-        desc: { en: "schedule and chain pipeline steps", es: "programa y encadena los pasos del pipeline" },
+        title: {
+          en: "Orchestration & Pipelines",
+          es: "Orquestación y Pipelines",
+        },
+        desc: {
+          en: "schedule and chain pipeline steps",
+          es: "programa y encadena los pasos del pipeline",
+        },
         tools: ["Airflow", "Prefect", "Kubeflow"],
       },
       {
-        title: { en: "Data & Feature Versioning", es: "Versionado de Datos y Variables" },
-        desc: { en: "version datasets and serve consistent features", es: "versiona conjuntos de datos y sirve variables consistentes" },
+        title: {
+          en: "Data & Feature Versioning",
+          es: "Versionado de Datos y Variables",
+        },
+        desc: {
+          en: "version datasets and serve consistent features",
+          es: "versiona conjuntos de datos y sirve variables consistentes",
+        },
         tools: ["DVC", "Pachyderm", "Feast"],
       },
     ],
     note: {
       en: 'Source: InfluxData, "MLOps: A Comprehensive Guide to Machine Learning Operations"',
-      es: 'Fuente: InfluxData, «MLOps: A Comprehensive Guide to Machine Learning Operations»',
+      es: "Fuente: InfluxData, «MLOps: A Comprehensive Guide to Machine Learning Operations»",
     },
   },
 
@@ -828,7 +942,10 @@ jobs:
     levels: [
       {
         tag: { en: "1", es: "1" },
-        name: { en: "Treat Config as Code", es: "Trata la Configuración como Código" },
+        name: {
+          en: "Treat Config as Code",
+          es: "Trata la Configuración como Código",
+        },
         desc: {
           en: "Never hardcode hyperparameters — use versioned YAML config files.",
           es: "Nunca fijes los hiperparámetros en el código; usa archivos de configuración YAML versionados.",
@@ -836,7 +953,10 @@ jobs:
       },
       {
         tag: { en: "2", es: "2" },
-        name: { en: "Automate Data Quality Checks", es: "Automatiza los Controles de Calidad de Datos" },
+        name: {
+          en: "Automate Data Quality Checks",
+          es: "Automatiza los Controles de Calidad de Datos",
+        },
         desc: {
           en: "Validate every batch with tools like Great Expectations before training.",
           es: "Valida cada lote con herramientas como Great Expectations antes de entrenar.",
@@ -844,7 +964,10 @@ jobs:
       },
       {
         tag: { en: "3", es: "3" },
-        name: { en: "Implement Model Monitoring", es: "Implementa Monitoreo de Modelos" },
+        name: {
+          en: "Implement Model Monitoring",
+          es: "Implementa Monitoreo de Modelos",
+        },
         desc: {
           en: "Detect data drift automatically and trigger retraining (e.g. Evidently).",
           es: "Detecta el drift de datos automáticamente y dispara el reentrenamiento (p. ej. con Evidently).",
@@ -860,7 +983,10 @@ jobs:
       },
       {
         tag: { en: "5", es: "5" },
-        name: { en: "Shadow Mode Deployments", es: "Despliegues en Modo Sombra" },
+        name: {
+          en: "Shadow Mode Deployments",
+          es: "Despliegues en Modo Sombra",
+        },
         desc: {
           en: "Run candidate models alongside production, compare before promoting.",
           es: "Ejecuta los modelos candidatos junto a producción y compáralos antes de promoverlos.",
@@ -875,7 +1001,10 @@ jobs:
     type: "pitfalls",
     section: 6,
     eyebrow: { en: "06 · Pitfalls", es: "06 · Errores Comunes" },
-    title: { en: "Common Pitfalls & How to Avoid Them", es: "Errores Comunes y Cómo Evitarlos" },
+    title: {
+      en: "Common Pitfalls & How to Avoid Them",
+      es: "Errores Comunes y Cómo Evitarlos",
+    },
     lede: {
       en: "Four mistakes that quietly sink ML projects — and the fix for each.",
       es: "Cuatro errores que hunden en silencio los proyectos de ML, y cómo corregir cada uno.",
@@ -894,7 +1023,10 @@ jobs:
         },
       },
       {
-        title: { en: "Data Leakage in CV", es: "Fuga de Datos en la Validación Cruzada" },
+        title: {
+          en: "Data Leakage in CV",
+          es: "Fuga de Datos en la Validación Cruzada",
+        },
         problem: {
           en: "Shuffling before split lets future data leak into training.",
           es: "Mezclar los datos antes de dividirlos deja que información futura se filtre al entrenamiento.",
@@ -905,7 +1037,10 @@ jobs:
         },
       },
       {
-        title: { en: "Ignoring Model Decay", es: "Ignorar la Degradación del Modelo" },
+        title: {
+          en: "Ignoring Model Decay",
+          es: "Ignorar la Degradación del Modelo",
+        },
         problem: {
           en: "Accuracy quietly degrades as the world changes.",
           es: "La precisión se degrada silenciosamente a medida que el mundo cambia.",
@@ -916,7 +1051,10 @@ jobs:
         },
       },
       {
-        title: { en: "Over-Engineering Too Early", es: "Sobre-ingeniería Prematura" },
+        title: {
+          en: "Over-Engineering Too Early",
+          es: "Sobre-ingeniería Prematura",
+        },
         problem: {
           en: "Building Kubernetes clusters before validating model value.",
           es: "Construir clústeres de Kubernetes antes de validar el valor del modelo.",
@@ -933,7 +1071,10 @@ jobs:
     type: "twocode",
     section: 6,
     eyebrow: { en: "06 · Pitfalls", es: "06 · Errores Comunes" },
-    title: { en: "Fixing a Common Pitfall: Time-Based Splits", es: "Cómo Corregir un Error Común: Divisiones Basadas en el Tiempo" },
+    title: {
+      en: "Fixing a Common Pitfall: Time-Based Splits",
+      es: "Cómo Corregir un Error Común: Divisiones Basadas en el Tiempo",
+    },
     lede: {
       en: "Random shuffling is the single most common source of data leakage in time-series problems.",
       es: "Mezclar aleatoriamente es la causa más común de fuga de datos en problemas de series temporales.",
@@ -974,7 +1115,10 @@ test = df[df['date'] >= split_date]`,
     type: "grid",
     section: 7,
     eyebrow: { en: "07 · Production", es: "07 · Producción" },
-    title: { en: "Monitoring & Observability", es: "Monitoreo y Observabilidad" },
+    title: {
+      en: "Monitoring & Observability",
+      es: "Monitoreo y Observabilidad",
+    },
     lede: {
       en: "A deployed model needs three layers of visibility — system health is not enough on its own.",
       es: "Un modelo desplegado necesita tres capas de visibilidad: la salud del sistema por sí sola no es suficiente.",
@@ -989,7 +1133,10 @@ test = df[df['date'] >= split_date]`,
         },
       },
       {
-        title: { en: "Data & prediction drift", es: "Drift de datos y predicciones" },
+        title: {
+          en: "Data & prediction drift",
+          es: "Drift de datos y predicciones",
+        },
         body: {
           en: "Are the inputs and outputs still statistically similar to what the model was trained on?",
           es: "¿Las entradas y salidas siguen siendo estadísticamente similares a aquello con lo que se entrenó el modelo?",
@@ -1041,7 +1188,10 @@ test = df[df['date'] >= split_date]`,
     type: "grid",
     section: 7,
     eyebrow: { en: "07 · Production", es: "07 · Producción" },
-    title: { en: "Incident Response & Rollback", es: "Respuesta a Incidentes y Rollback" },
+    title: {
+      en: "Incident Response & Rollback",
+      es: "Respuesta a Incidentes y Rollback",
+    },
     lede: {
       en: "Treat a bad model deployment the way you'd treat any production incident — with a plan decided before it happens, not during.",
       es: "Trata un despliegue de modelo fallido como cualquier incidente de producción: con un plan decidido antes de que ocurra, no durante.",
@@ -1078,7 +1228,10 @@ test = df[df['date'] >= split_date]`,
     type: "grid",
     section: 8,
     eyebrow: { en: "08 · Trust", es: "08 · Confianza" },
-    title: { en: "Security, Privacy & Compliance", es: "Seguridad, Privacidad y Cumplimiento" },
+    title: {
+      en: "Security, Privacy & Compliance",
+      es: "Seguridad, Privacidad y Cumplimiento",
+    },
     lede: {
       en: "Models are trained on sensitive data and make consequential decisions — both need explicit controls, not assumptions.",
       es: "Los modelos se entrenan con datos sensibles y toman decisiones con consecuencias reales: ambas cosas necesitan controles explícitos, no suposiciones.",
@@ -1170,31 +1323,52 @@ test = df[df['date'] >= split_date]`,
     type: "casestudy",
     section: 10,
     eyebrow: { en: "10 · Case Study", es: "10 · Caso de Estudio" },
-    title: { en: "Case Study: Production Recommendation System", es: "Caso de Estudio: Sistema de Recomendaciones en Producción" },
+    title: {
+      en: "Case Study: Production Recommendation System",
+      es: "Caso de Estudio: Sistema de Recomendaciones en Producción",
+    },
     backgroundTitle: { en: "Background", es: "Contexto" },
     background: [
       { en: "E-commerce platform", es: "Plataforma de comercio electrónico" },
       { en: "500K monthly users", es: "500 mil usuarios mensuales" },
-      { en: "Needed ML-driven product recommendations", es: "Necesitaba recomendaciones de productos basadas en ML" },
-      { en: "Frequent outages & zero reproducibility", es: "Caídas frecuentes y cero reproducibilidad" },
+      {
+        en: "Needed ML-driven product recommendations",
+        es: "Necesitaba recomendaciones de productos basadas en ML",
+      },
+      {
+        en: "Frequent outages & zero reproducibility",
+        es: "Caídas frecuentes y cero reproducibilidad",
+      },
     ],
     challengesTitle: { en: "Challenges", es: "Desafíos" },
     challenges: [
       {
         problem: { en: "No versioning", es: "Sin versionado" },
-        impact: { en: "20+ pickle files scattered on a shared drive", es: "Más de 20 archivos pickle dispersos en una unidad compartida" },
+        impact: {
+          en: "20+ pickle files scattered on a shared drive",
+          es: "Más de 20 archivos pickle dispersos en una unidad compartida",
+        },
       },
       {
         problem: { en: "Slow experiments", es: "Experimentos lentos" },
-        impact: { en: "8-hour training time", es: "8 horas de tiempo de entrenamiento" },
+        impact: {
+          en: "8-hour training time",
+          es: "8 horas de tiempo de entrenamiento",
+        },
       },
       {
         problem: { en: "No monitoring", es: "Sin monitoreo" },
-        impact: { en: "Couldn't detect model decay", es: "No se podía detectar la degradación del modelo" },
+        impact: {
+          en: "Couldn't detect model decay",
+          es: "No se podía detectar la degradación del modelo",
+        },
       },
       {
         problem: { en: "Manual deployments", es: "Despliegues manuales" },
-        impact: { en: "6-hour release cycles", es: "Ciclos de lanzamiento de 6 horas" },
+        impact: {
+          en: "6-hour release cycles",
+          es: "Ciclos de lanzamiento de 6 horas",
+        },
       },
     ],
   },
@@ -1203,7 +1377,10 @@ test = df[df['date'] >= split_date]`,
     type: "levels",
     section: 10,
     eyebrow: { en: "10 · Case Study", es: "10 · Caso de Estudio" },
-    title: { en: "Case Study: The Fix — Three Phases", es: "Caso de Estudio: La Solución en Tres Fases" },
+    title: {
+      en: "Case Study: The Fix — Three Phases",
+      es: "Caso de Estudio: La Solución en Tres Fases",
+    },
     lede: {
       en: "Three phases turned a fragile, manual process into a reliable pipeline.",
       es: "Tres fases convirtieron un proceso frágil y manual en un pipeline confiable.",
@@ -1220,7 +1397,10 @@ test = df[df['date'] >= split_date]`,
       {
         tag: { en: "2", es: "2" },
         name: { en: "Distributed Training", es: "Entrenamiento Distribuido" },
-        desc: { en: "Spark ALS model — 8 hrs → 45 min", es: "Modelo Spark ALS: de 8 h a 45 min" },
+        desc: {
+          en: "Spark ALS model — 8 hrs → 45 min",
+          es: "Modelo Spark ALS: de 8 h a 45 min",
+        },
       },
       {
         tag: { en: "3", es: "3" },
@@ -1238,7 +1418,10 @@ test = df[df['date'] >= split_date]`,
     section: 10,
     eyebrow: { en: "10 · Case Study", es: "10 · Caso de Estudio" },
     title: { en: "Case Study: Results", es: "Caso de Estudio: Resultados" },
-    lede: { en: "Before → after MLOps adoption.", es: "Antes → después de adoptar MLOps." },
+    lede: {
+      en: "Before → after MLOps adoption.",
+      es: "Antes → después de adoptar MLOps.",
+    },
     tiles: [
       {
         value: "85%",
@@ -1270,10 +1453,22 @@ test = df[df['date'] >= split_date]`,
     },
     winsTitle: { en: "Technical Wins", es: "Logros Técnicos" },
     wins: [
-      { en: "All 47 experiments tracked in MLflow", es: "Los 47 experimentos quedaron registrados en MLflow" },
-      { en: "Data versioning enabled A/B test rollbacks", es: "El versionado de datos permitió revertir pruebas A/B" },
-      { en: "Automated retraining every Sunday at 2 AM", es: "Reentrenamiento automatizado cada domingo a las 2 AM" },
-      { en: "Model performance dashboards in Grafana", es: "Paneles de desempeño del modelo en Grafana" },
+      {
+        en: "All 47 experiments tracked in MLflow",
+        es: "Los 47 experimentos quedaron registrados en MLflow",
+      },
+      {
+        en: "Data versioning enabled A/B test rollbacks",
+        es: "El versionado de datos permitió revertir pruebas A/B",
+      },
+      {
+        en: "Automated retraining every Sunday at 2 AM",
+        es: "Reentrenamiento automatizado cada domingo a las 2 AM",
+      },
+      {
+        en: "Model performance dashboards in Grafana",
+        es: "Paneles de desempeño del modelo en Grafana",
+      },
     ],
   },
 
@@ -1283,7 +1478,10 @@ test = df[df['date'] >= split_date]`,
     type: "levels",
     section: 11,
     eyebrow: { en: "11 · Roadmap", es: "11 · Hoja de ruta" },
-    title: { en: "An MLOps Maturity Model", es: "Un Modelo de Madurez de MLOps" },
+    title: {
+      en: "An MLOps Maturity Model",
+      es: "Un Modelo de Madurez de MLOps",
+    },
     lede: {
       en: "Maturity is a gradient, not a switch. Most organizations move through these stages one capability at a time.",
       es: "La madurez es un gradiente, no un interruptor. La mayoría de las organizaciones avanza por estas etapas una capacidad a la vez.",
@@ -1328,7 +1526,10 @@ test = df[df['date'] >= split_date]`,
     type: "levels",
     section: 11,
     eyebrow: { en: "11 · Roadmap", es: "11 · Hoja de ruta" },
-    title: { en: "Implementing MLOps: A Roadmap", es: "Implementar MLOps: Una Hoja de Ruta" },
+    title: {
+      en: "Implementing MLOps: A Roadmap",
+      es: "Implementar MLOps: Una Hoja de Ruta",
+    },
     lede: {
       en: "A high-level path organizations follow to stand up an MLOps practice.",
       es: "Un camino general que siguen las organizaciones para establecer una práctica de MLOps.",
@@ -1336,7 +1537,10 @@ test = df[df['date'] >= split_date]`,
     levels: [
       {
         tag: { en: "1", es: "1" },
-        name: { en: "Establish current state & objectives", es: "Establece tu punto de partida y tus objetivos" },
+        name: {
+          en: "Establish current state & objectives",
+          es: "Establece tu punto de partida y tus objetivos",
+        },
         desc: {
           en: "Baseline today's deployment time and model accuracy; set concrete improvement goals.",
           es: "Mide tu tiempo de despliegue y precisión actuales; define metas de mejora concretas.",
@@ -1352,7 +1556,10 @@ test = df[df['date'] >= split_date]`,
       },
       {
         tag: { en: "3", es: "3" },
-        name: { en: "Define data governance", es: "Define la gobernanza de datos" },
+        name: {
+          en: "Define data governance",
+          es: "Define la gobernanza de datos",
+        },
         desc: {
           en: "Set standards for collection, storage, versioning, quality, and compliance.",
           es: "Establece estándares de recolección, almacenamiento, versionado, calidad y cumplimiento.",
@@ -1360,7 +1567,10 @@ test = df[df['date'] >= split_date]`,
       },
       {
         tag: { en: "4", es: "4" },
-        name: { en: "Select tools & platforms", es: "Elige herramientas y plataformas" },
+        name: {
+          en: "Select tools & platforms",
+          es: "Elige herramientas y plataformas",
+        },
         desc: {
           en: "Weigh build vs. buy, team experience, and community support.",
           es: "Evalúa construir vs. comprar, la experiencia del equipo y el soporte de la comunidad.",
@@ -1368,7 +1578,10 @@ test = df[df['date'] >= split_date]`,
       },
       {
         tag: { en: "5", es: "5" },
-        name: { en: "Automate the deployment pipeline", es: "Automatiza el pipeline de despliegue" },
+        name: {
+          en: "Automate the deployment pipeline",
+          es: "Automatiza el pipeline de despliegue",
+        },
         desc: {
           en: "Start with CI/CD for testing, tracking, and promoting models.",
           es: "Empieza con CI/CD para probar, rastrear y promover modelos.",
@@ -1426,9 +1639,15 @@ test = df[df['date'] >= split_date]`,
     nextStepsTitle: { en: "Next Steps", es: "Próximos Pasos" },
     nextSteps: [
       { en: "Set up MLflow locally", es: "Configura MLflow en tu máquina" },
-      { en: "Version your first dataset with DVC", es: "Versiona tu primer conjunto de datos con DVC" },
+      {
+        en: "Version your first dataset with DVC",
+        es: "Versiona tu primer conjunto de datos con DVC",
+      },
       { en: "Write one automated test", es: "Escribe una prueba automatizada" },
-      { en: "Deploy to staging & monitor for a week", es: "Despliega a staging y monitorea durante una semana" },
+      {
+        en: "Deploy to staging & monitor for a week",
+        es: "Despliega a staging y monitorea durante una semana",
+      },
     ],
     thankYou: { en: "Thank you.", es: "Gracias." },
   },
@@ -1446,9 +1665,18 @@ export const QUIZ = [
       es: "En MLflow, ¿cuál de estos registrarías como un Parámetro en lugar de una Métrica?",
     },
     options: [
-      { en: "The learning rate used for training", es: "La tasa de aprendizaje usada para el entrenamiento" },
-      { en: "The model's test accuracy", es: "La precisión del modelo en el conjunto de prueba" },
-      { en: "A confusion matrix image", es: "Una imagen de la matriz de confusión" },
+      {
+        en: "The learning rate used for training",
+        es: "La tasa de aprendizaje usada para el entrenamiento",
+      },
+      {
+        en: "The model's test accuracy",
+        es: "La precisión del modelo en el conjunto de prueba",
+      },
+      {
+        en: "A confusion matrix image",
+        es: "Una imagen de la matriz de confusión",
+      },
       { en: "The trained model file", es: "El archivo del modelo entrenado" },
     ],
     correct: 0,
@@ -1479,10 +1707,22 @@ export const QUIZ = [
       es: "¿Cuál es la relación correcta entre un Experimento y una Ejecución (Run) en MLflow?",
     },
     options: [
-      { en: "A Run can belong to multiple Experiments at once", es: "Una Ejecución puede pertenecer a varios Experimentos a la vez" },
-      { en: "An Experiment groups together multiple Runs of the same project", es: "Un Experimento agrupa varias Ejecuciones del mismo proyecto" },
-      { en: "A Run and an Experiment are interchangeable terms", es: "Una Ejecución y un Experimento son términos intercambiables" },
-      { en: "Experiments are created only after all Runs finish", es: "Los Experimentos se crean solo después de que terminan todas las Ejecuciones" },
+      {
+        en: "A Run can belong to multiple Experiments at once",
+        es: "Una Ejecución puede pertenecer a varios Experimentos a la vez",
+      },
+      {
+        en: "An Experiment groups together multiple Runs of the same project",
+        es: "Un Experimento agrupa varias Ejecuciones del mismo proyecto",
+      },
+      {
+        en: "A Run and an Experiment are interchangeable terms",
+        es: "Una Ejecución y un Experimento son términos intercambiables",
+      },
+      {
+        en: "Experiments are created only after all Runs finish",
+        es: "Los Experimentos se crean solo después de que terminan todas las Ejecuciones",
+      },
     ],
     correct: 1,
     correctReason: {
@@ -1548,8 +1788,14 @@ export const QUIZ = [
       es: "¿Por qué es útil registrar la misma métrica (por ejemplo, F1-score) en varias Ejecuciones con distintos hiperparámetros?",
     },
     options: [
-      { en: "It isn't useful — one Run is always enough", es: "No es útil: una sola Ejecución siempre es suficiente" },
-      { en: "It reduces the model's training time", es: "Reduce el tiempo de entrenamiento del modelo" },
+      {
+        en: "It isn't useful — one Run is always enough",
+        es: "No es útil: una sola Ejecución siempre es suficiente",
+      },
+      {
+        en: "It reduces the model's training time",
+        es: "Reduce el tiempo de entrenamiento del modelo",
+      },
       {
         en: "MLflow requires at least 3 Runs per Experiment to function",
         es: "MLflow requiere al menos 3 Ejecuciones por Experimento para funcionar",
@@ -1591,8 +1837,14 @@ export const QUIZ = [
         en: "Scikit-learn performs the actual training/prediction; MLflow records what happened during that process",
         es: "Scikit-learn realiza el entrenamiento/predicción real; MLflow registra lo que ocurrió durante ese proceso",
       },
-      { en: "Scikit-learn logs metadata; MLflow trains the model", es: "Scikit-learn registra metadatos; MLflow entrena el modelo" },
-      { en: "They do the same job, just with different syntax", es: "Hacen lo mismo, solo con sintaxis diferente" },
+      {
+        en: "Scikit-learn logs metadata; MLflow trains the model",
+        es: "Scikit-learn registra metadatos; MLflow entrena el modelo",
+      },
+      {
+        en: "They do the same job, just with different syntax",
+        es: "Hacen lo mismo, solo con sintaxis diferente",
+      },
       {
         en: "MLflow replaces the need for a machine learning library entirely",
         es: "MLflow elimina por completo la necesidad de una librería de machine learning",
@@ -1620,18 +1872,27 @@ export const QUIZ = [
     ],
   },
   {
-    topic: { en: "Preprocessing & Ensemble Methods", es: "Preprocesamiento y Métodos de Ensamble" },
+    topic: {
+      en: "Preprocessing & Ensemble Methods",
+      es: "Preprocesamiento y Métodos de Ensamble",
+    },
     question: {
       en: 'When treating outliers with the IQR (interquartile range) method, "capping" (winsorizing) a value means:',
       es: "Al tratar valores atípicos con el método del RIC (rango intercuartílico), «acotar» (winsorizar) un valor significa:",
     },
     options: [
-      { en: "Deleting the row that contains it", es: "Eliminar la fila que lo contiene" },
+      {
+        en: "Deleting the row that contains it",
+        es: "Eliminar la fila que lo contiene",
+      },
       {
         en: "Replacing it with the nearest boundary of the acceptable range instead of removing the row",
         es: "Reemplazarlo por el límite más cercano del rango aceptable, en lugar de eliminar la fila",
       },
-      { en: "Replacing it with the column mean", es: "Reemplazarlo por la media de la columna" },
+      {
+        en: "Replacing it with the column mean",
+        es: "Reemplazarlo por la media de la columna",
+      },
       {
         en: "Ignoring it during training but keeping it for evaluation",
         es: "Ignorarlo durante el entrenamiento pero conservarlo para la evaluación",
@@ -1659,19 +1920,31 @@ export const QUIZ = [
     ],
   },
   {
-    topic: { en: "Preprocessing & Ensemble Methods", es: "Preprocesamiento y Métodos de Ensamble" },
+    topic: {
+      en: "Preprocessing & Ensemble Methods",
+      es: "Preprocesamiento y Métodos de Ensamble",
+    },
     question: {
       en: "Why might engineering a ratio between two correlated numeric features (instead of using them separately) help a classifier?",
       es: "¿Por qué podría ayudar a un clasificador crear una razón (ratio) entre dos variables numéricas correlacionadas, en lugar de usarlas por separado?",
     },
     options: [
-      { en: "It always improves accuracy regardless of the model", es: "Siempre mejora la precisión, sin importar el modelo" },
-      { en: "It reduces the dataset size", es: "Reduce el tamaño del conjunto de datos" },
+      {
+        en: "It always improves accuracy regardless of the model",
+        es: "Siempre mejora la precisión, sin importar el modelo",
+      },
+      {
+        en: "It reduces the dataset size",
+        es: "Reduce el tamaño del conjunto de datos",
+      },
       {
         en: "It can capture a relationship between the two variables that's more directly relevant to the target than either raw value alone",
         es: "Puede capturar una relación entre las dos variables que es más relevante para el objetivo que cualquiera de los valores originales por separado",
       },
-      { en: "It removes the need for a train/test split", es: "Elimina la necesidad de una división entrenamiento/prueba" },
+      {
+        en: "It removes the need for a train/test split",
+        es: "Elimina la necesidad de una división entrenamiento/prueba",
+      },
     ],
     correct: 2,
     correctReason: {
@@ -1695,14 +1968,23 @@ export const QUIZ = [
     ],
   },
   {
-    topic: { en: "Preprocessing & Ensemble Methods", es: "Preprocesamiento y Métodos de Ensamble" },
+    topic: {
+      en: "Preprocessing & Ensemble Methods",
+      es: "Preprocesamiento y Métodos de Ensamble",
+    },
     question: {
       en: "Why is it risky to reuse a single already-fitted ColumnTransformer/preprocessor object across two different model pipelines?",
       es: "¿Por qué es riesgoso reutilizar un mismo objeto ColumnTransformer/preprocesador ya ajustado en dos pipelines de modelos diferentes?",
     },
     options: [
-      { en: "It isn't risky — this is the recommended approach", es: "No es riesgoso; es el enfoque recomendado" },
-      { en: "It causes a memory leak that crashes the kernel", es: "Provoca una fuga de memoria que bloquea el kernel" },
+      {
+        en: "It isn't risky — this is the recommended approach",
+        es: "No es riesgoso; es el enfoque recomendado",
+      },
+      {
+        en: "It causes a memory leak that crashes the kernel",
+        es: "Provoca una fuga de memoria que bloquea el kernel",
+      },
       {
         en: "ColumnTransformer objects can only be used once, ever, and must be deleted after",
         es: "Los objetos ColumnTransformer solo pueden usarse una vez, y deben eliminarse después",
@@ -1734,7 +2016,10 @@ export const QUIZ = [
     ],
   },
   {
-    topic: { en: "Preprocessing & Ensemble Methods", es: "Preprocesamiento y Métodos de Ensamble" },
+    topic: {
+      en: "Preprocessing & Ensemble Methods",
+      es: "Preprocesamiento y Métodos de Ensamble",
+    },
     question: {
       en: "What does handle_unknown='ignore' do when passed to a OneHotEncoder?",
       es: "¿Qué hace handle_unknown='ignore' cuando se pasa a un OneHotEncoder?",
@@ -1744,7 +2029,10 @@ export const QUIZ = [
         en: "Prevents an error when the encoder sees a category at prediction time that it never saw during training",
         es: "Evita un error cuando el codificador ve, al predecir, una categoría que nunca vio durante el entrenamiento",
       },
-      { en: "Ignores missing values in the training set", es: "Ignora los valores faltantes en el conjunto de entrenamiento" },
+      {
+        en: "Ignores missing values in the training set",
+        es: "Ignora los valores faltantes en el conjunto de entrenamiento",
+      },
       {
         en: "Skips encoding for columns with too many unique values",
         es: "Omite la codificación de columnas con demasiados valores únicos",
@@ -1776,7 +2064,10 @@ export const QUIZ = [
     ],
   },
   {
-    topic: { en: "Preprocessing & Ensemble Methods", es: "Preprocesamiento y Métodos de Ensamble" },
+    topic: {
+      en: "Preprocessing & Ensemble Methods",
+      es: "Preprocesamiento y Métodos de Ensamble",
+    },
     question: {
       en: "Conceptually, how does Boosting (e.g. XGBoost) differ from Bagging (e.g. Random Forest)?",
       es: "Conceptualmente, ¿en qué se diferencia el Boosting (p. ej. XGBoost) del Bagging (p. ej. Random Forest)?",
@@ -1790,7 +2081,10 @@ export const QUIZ = [
         en: "Boosting trains trees sequentially, each one correcting the errors of the previous ones; Bagging trains trees independently on bootstrap samples",
         es: "El Boosting entrena árboles secuencialmente, cada uno corrigiendo los errores de los anteriores; el Bagging entrena árboles de forma independiente sobre muestras bootstrap",
       },
-      { en: "Boosting only supports regression tasks", es: "El Boosting solo admite tareas de regresión" },
+      {
+        en: "Boosting only supports regression tasks",
+        es: "El Boosting solo admite tareas de regresión",
+      },
       {
         en: "There's no real difference between the two approaches",
         es: "No hay una diferencia real entre los dos enfoques",

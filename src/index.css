@@ -21,6 +21,39 @@ body {
   background-size: 28px 28px;
 }
 
+/* PDF export view: one fixed-size printable page per slide */
+.pdf-page {
+  position: relative;
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+}
+
+.pdf-page-last {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.pdf-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(160, 205, 225, 0.2);
+  padding: 10px 28px;
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8fa9bd;
+}
+
+.pdf-page-body {
+  position: relative;
+  height: calc(800px - 41px);
+}
+
 @keyframes slide-fade-in {
   from {
     opacity: 0;

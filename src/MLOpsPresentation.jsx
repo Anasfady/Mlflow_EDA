@@ -484,7 +484,7 @@ function ContentSlide({ data, lang }) {
           </div>
           <div>
             <h3 className="mb-3 font-serif text-lg font-bold text-[#eef3f2]">{t(data.uniqueTitle)}</h3>
-            <div className="stagger space-y-3">
+            <div className="stagger grid grid-cols-1 gap-3 sm:grid-cols-2">
               {data.uniquePanels.map((p, i) => (
                 <Panel key={i} title={t(p.title)}>
                   {t(p.body)}
@@ -540,15 +540,16 @@ function shuffledIndices(n) {
   return order;
 }
 
-function QuizSlide({ q, index, total, lang }) {
+function QuizSlide({ q, index, total, lang, printMode = false }) {
   const t = (field) => field[lang];
-  const [selected, setSelected] = useState(null);
-  const [order] = useState(() => shuffledIndices(q.options.length));
-  const answered = selected !== null;
-
+  const [order] = useState(() =>
+    printMode ? q.options.map((_, i) => i) : shuffledIndices(q.options.length)
+  );
   const displayOptions = order.map((i) => q.options[i]);
   const displayWrongReasons = order.map((i) => q.wrongReasons[i]);
   const displayCorrect = order.indexOf(q.correct);
+  const [selected, setSelected] = useState(() => (printMode ? displayCorrect : null));
+  const answered = selected !== null;
 
   return (
     <Slide eyebrow={`${UI.quiz[lang]} · ${t(q.topic)}`}>
@@ -634,6 +635,38 @@ function slideLabel(slide, lang) {
 }
 
 /* ---------------------------------------------------------------------- */
+/*  PDF export view: every slide stacked as one fixed-size printable page  */
+/* ---------------------------------------------------------------------- */
+
+function PrintDeck({ lang }) {
+  const total = SLIDES.length;
+  return (
+    <div className="font-sans text-[#eef3f2]">
+      {SLIDES.map((slide, i) => (
+        <div
+          key={slide.id}
+          className={`pdf-page blueprint-grid ${i === total - 1 ? "pdf-page-last" : ""}`}
+        >
+          <div className="pdf-page-header">
+            <span>{UI.brand[lang]}</span>
+            <span>
+              {UI.sheet[lang]} {i + 1} {UI.of[lang]} {total} &middot; {UI.rev[lang]}
+            </span>
+          </div>
+          <div className="pdf-page-body">
+            {slide.kind === "quiz" ? (
+              <QuizSlide q={slide.data} index={slide.quizIndex} total={QUIZ.length} lang={lang} printMode />
+            ) : (
+              <ContentSlide data={slide.data} lang={lang} />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------- */
 /*  Presentation shell: title block, navigation, keyboard, ruler nav       */
 /* ---------------------------------------------------------------------- */
 
@@ -692,6 +725,14 @@ function Presentation() {
             </span>{" "}
             {UI.of[lang]} {total} &middot; {UI.rev[lang]}
           </span>
+          <a
+            href={`${import.meta.env.BASE_URL}MLOps_Best_Practices_${lang === "es" ? "ES" : "EN"}.pdf`}
+            title={UI.downloadPdf[lang]}
+            aria-label={UI.downloadPdf[lang]}
+            className="border border-[#a0cde1]/25 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide text-[#8fa9bd] transition-colors hover:border-[#7ec6e6]/50 hover:text-[#eef3f2]"
+          >
+            PDF &darr;
+          </a>
           <LanguageSwitcher />
         </div>
       </div>
@@ -761,6 +802,10 @@ function Presentation() {
 }
 
 export default function MLOpsPresentation() {
+  const exportLang = new URLSearchParams(window.location.search).get("export");
+  if (exportLang === "en" || exportLang === "es") {
+    return <PrintDeck lang={exportLang} />;
+  }
   return (
     <LangProvider>
       <Presentation />
