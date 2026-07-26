@@ -185,10 +185,10 @@ export const DECK = [
         },
       },
       {
-        title: { en: "Everything drifts", es: "Todo cambia (drift)" },
+        title: { en: "Untracked iteration", es: "Iteración sin registro" },
         body: {
-          en: "The world the model was trained on keeps changing after deployment — user behavior, upstream data, seasonality.",
-          es: "El mundo con el que se entrenó el modelo sigue cambiando tras el despliegue: comportamiento de usuarios, datos de origen, estacionalidad.",
+          en: "Dozens of notebook reruns with tweaked parameters, but no record of which one actually produced the reported number.",
+          es: "Docenas de reejecuciones del notebook con parámetros ajustados, pero sin registro de cuál produjo realmente el número reportado.",
         },
       },
       {
@@ -242,6 +242,64 @@ export const DECK = [
     loopNote: {
       en: "Retraining feeds back into Collect & Prepare",
       es: "El reentrenamiento retroalimenta a Recolectar y Preparar",
+    },
+  },
+  {
+    id: "tool-landscape",
+    type: "landscape",
+    section: 1,
+    eyebrow: { en: "01 · Foundations", es: "01 · Fundamentos" },
+    title: {
+      en: "The MLOps Tool Landscape",
+      es: "El Panorama de Herramientas de MLOps",
+    },
+    lede: {
+      en: "Beyond MLflow and DVC — a broader ecosystem covers every stage of the ML lifecycle.",
+      es: "Más allá de MLflow y DVC: un ecosistema más amplio cubre cada etapa del ciclo de vida del ML.",
+    },
+    categories: [
+      {
+        title: { en: "Notebooks & Frameworks", es: "Notebooks y Frameworks" },
+        desc: {
+          en: "prototype models and write the training code",
+          es: "prototipar modelos y escribir el código de entrenamiento",
+        },
+        tools: ["Jupyter", "TensorFlow", "PyTorch"],
+      },
+      {
+        title: { en: "Experiment Tracking", es: "Seguimiento de Experimentos" },
+        desc: {
+          en: "log runs, metrics, and artifacts",
+          es: "registra ejecuciones, métricas y artefactos",
+        },
+        tools: ["MLflow", "Weights & Biases"],
+      },
+      {
+        title: {
+          en: "Orchestration & Pipelines",
+          es: "Orquestación y Pipelines",
+        },
+        desc: {
+          en: "schedule and chain pipeline steps",
+          es: "programa y encadena los pasos del pipeline",
+        },
+        tools: ["Airflow", "Prefect", "Kubeflow"],
+      },
+      {
+        title: {
+          en: "Data & Feature Versioning",
+          es: "Versionado de Datos y Variables",
+        },
+        desc: {
+          en: "version datasets and serve consistent features",
+          es: "versiona conjuntos de datos y sirve variables consistentes",
+        },
+        tools: ["DVC", "Pachyderm", "Feast"],
+      },
+    ],
+    note: {
+      en: 'Source: InfluxData, "MLOps: A Comprehensive Guide to Machine Learning Operations"',
+      es: "Fuente: InfluxData, «MLOps: A Comprehensive Guide to Machine Learning Operations»",
     },
   },
 
@@ -388,41 +446,6 @@ dvc repro`,
     note: {
       en: "Every dataset version is tied to a Git commit — checkout any commit and dvc checkout restores the exact data that produced it.",
       es: "Cada versión del conjunto de datos está ligada a un commit de Git: al hacer checkout de cualquier commit, dvc checkout restaura exactamente los datos que lo produjeron.",
-    },
-  },
-  {
-    id: "feature-stores",
-    type: "grid",
-    section: 2,
-    eyebrow: { en: "02 · Reproducibility", es: "02 · Reproducibilidad" },
-    title: { en: "Feature Stores", es: "Feature Stores" },
-    lede: {
-      en: 'The most common production bug in ML: features computed differently in training than in serving — "training/serving skew."',
-      es: "El error de producción más común en ML: variables (features) calculadas de forma distinta en entrenamiento que en servicio, el «training/serving skew».",
-    },
-    cols: 2,
-    panels: [
-      {
-        title: { en: "Offline store", es: "Almacén offline" },
-        body: {
-          en: "Historical, point-in-time correct features used to build training datasets.",
-          es: "Variables históricas y correctas en el momento exacto, usadas para construir los conjuntos de entrenamiento.",
-        },
-      },
-      {
-        title: { en: "Online store", es: "Almacén online" },
-        body: {
-          en: "Low-latency key-value lookups serving the same feature definitions at inference time.",
-          es: "Consultas clave-valor de baja latencia que sirven las mismas definiciones de variables en el momento de la inferencia.",
-        },
-      },
-    ],
-    extraPanel: {
-      title: { en: "Why it matters", es: "Por qué importa" },
-      body: {
-        en: "A feature store defines each feature's logic once and reuses it in both paths — eliminating an entire class of silent production bugs.",
-        es: "Un feature store define la lógica de cada variable una sola vez y la reutiliza en ambos caminos, eliminando toda una clase de errores silenciosos en producción.",
-      },
     },
   },
 
@@ -618,72 +641,12 @@ dvc repro`,
 └── requirements.txt`,
   },
 
-  /* ---------------------------- 04 · Automation ------------------------ */
-  {
-    id: "tool-landscape",
-    type: "landscape",
-    section: 4,
-    eyebrow: { en: "04 · Tooling", es: "04 · Herramientas" },
-    title: {
-      en: "The MLOps Tool Landscape",
-      es: "El Panorama de Herramientas de MLOps",
-    },
-    lede: {
-      en: "Beyond MLflow and DVC — a broader ecosystem covers every stage of the ML lifecycle.",
-      es: "Más allá de MLflow y DVC: un ecosistema más amplio cubre cada etapa del ciclo de vida del ML.",
-    },
-    categories: [
-      {
-        title: { en: "Notebooks & Frameworks", es: "Notebooks y Frameworks" },
-        desc: {
-          en: "prototype models and write the training code",
-          es: "prototipar modelos y escribir el código de entrenamiento",
-        },
-        tools: ["Jupyter", "TensorFlow", "PyTorch"],
-      },
-      {
-        title: { en: "Experiment Tracking", es: "Seguimiento de Experimentos" },
-        desc: {
-          en: "log runs, metrics, and artifacts",
-          es: "registra ejecuciones, métricas y artefactos",
-        },
-        tools: ["MLflow", "Weights & Biases"],
-      },
-      {
-        title: {
-          en: "Orchestration & Pipelines",
-          es: "Orquestación y Pipelines",
-        },
-        desc: {
-          en: "schedule and chain pipeline steps",
-          es: "programa y encadena los pasos del pipeline",
-        },
-        tools: ["Airflow", "Prefect", "Kubeflow"],
-      },
-      {
-        title: {
-          en: "Data & Feature Versioning",
-          es: "Versionado de Datos y Variables",
-        },
-        desc: {
-          en: "version datasets and serve consistent features",
-          es: "versiona conjuntos de datos y sirve variables consistentes",
-        },
-        tools: ["DVC", "Pachyderm", "Feast"],
-      },
-    ],
-    note: {
-      en: 'Source: InfluxData, "MLOps: A Comprehensive Guide to Machine Learning Operations"',
-      es: "Fuente: InfluxData, «MLOps: A Comprehensive Guide to Machine Learning Operations»",
-    },
-  },
-
-  /* ------------------------------ 05 · Quality -------------------------- */
+  /* ------------------------------ 04 · Quality -------------------------- */
   {
     id: "testing-ml",
     type: "grid",
-    section: 5,
-    eyebrow: { en: "05 · Quality", es: "05 · Calidad" },
+    section: 4,
+    eyebrow: { en: "04 · Quality", es: "04 · Calidad" },
     title: { en: "Testing an ML System", es: "Probar un Sistema de ML" },
     lede: {
       en: "Unit tests alone don't catch a model that's statistically wrong. ML systems need their own test pyramid.",
@@ -724,8 +687,8 @@ dvc repro`,
   {
     id: "best-practices",
     type: "levels",
-    section: 5,
-    eyebrow: { en: "05 · Quality", es: "05 · Calidad" },
+    section: 4,
+    eyebrow: { en: "04 · Quality", es: "04 · Calidad" },
     title: { en: "Best Practices", es: "Buenas Prácticas" },
     lede: {
       en: "Five habits that separate teams that ship ML reliably from teams that don't.",
@@ -787,12 +750,12 @@ dvc repro`,
     ],
   },
 
-  /* ----------------------------- 06 · Pitfalls -------------------------- */
+  /* ----------------------------- 05 · Pitfalls -------------------------- */
   {
     id: "common-pitfalls",
     type: "pitfalls",
-    section: 6,
-    eyebrow: { en: "06 · Pitfalls", es: "06 · Errores Comunes" },
+    section: 5,
+    eyebrow: { en: "05 · Pitfalls", es: "05 · Errores Comunes" },
     title: {
       en: "Common Pitfalls & How to Avoid Them",
       es: "Errores Comunes y Cómo Evitarlos",
@@ -861,8 +824,8 @@ dvc repro`,
   {
     id: "pitfall-fix-time-split",
     type: "twocode",
-    section: 6,
-    eyebrow: { en: "06 · Pitfalls", es: "06 · Errores Comunes" },
+    section: 5,
+    eyebrow: { en: "05 · Pitfalls", es: "05 · Errores Comunes" },
     title: {
       en: "Fixing a Common Pitfall: Time-Based Splits",
       es: "Cómo Corregir un Error Común: Divisiones Basadas en el Tiempo",
@@ -901,12 +864,12 @@ test = df[df['date'] >= split_date]`,
     ],
   },
 
-  /* ------------------------------- 07 · Roadmap ---------------------------- */
+  /* ------------------------------- 06 · Roadmap ---------------------------- */
   {
     id: "maturity-model",
     type: "levels",
-    section: 7,
-    eyebrow: { en: "07 · Roadmap", es: "07 · Hoja de ruta" },
+    section: 6,
+    eyebrow: { en: "06 · Roadmap", es: "06 · Hoja de ruta" },
     title: {
       en: "An MLOps Maturity Model",
       es: "Un Modelo de Madurez de MLOps",
@@ -953,8 +916,8 @@ test = df[df['date'] >= split_date]`,
   {
     id: "adoption-roadmap",
     type: "levels",
-    section: 7,
-    eyebrow: { en: "07 · Roadmap", es: "07 · Hoja de ruta" },
+    section: 6,
+    eyebrow: { en: "06 · Roadmap", es: "06 · Hoja de ruta" },
     title: {
       en: "Implementing MLOps: A Roadmap",
       es: "Implementar MLOps: Una Hoja de Ruta",
@@ -1031,7 +994,7 @@ test = df[df['date'] >= split_date]`,
   {
     id: "takeaways",
     type: "closing",
-    section: 8,
+    section: 7,
     eyebrow: { en: "Closing", es: "Cierre" },
     title: { en: "Key Takeaways", es: "Conclusiones Clave" },
     cols: 2,
@@ -1090,174 +1053,6 @@ export const QUIZ = [
   {
     topic: { en: "MLflow", es: "MLflow" },
     question: {
-      en: "In MLflow, which of these would you log as a Parameter rather than a Metric?",
-      es: "En MLflow, ¿cuál de estos registrarías como un Parámetro en lugar de una Métrica?",
-    },
-    options: [
-      {
-        en: "The learning rate used for training",
-        es: "La tasa de aprendizaje usada para el entrenamiento",
-      },
-      {
-        en: "The model's test accuracy",
-        es: "La precisión del modelo en el conjunto de prueba",
-      },
-      {
-        en: "A confusion matrix image",
-        es: "Una imagen de la matriz de confusión",
-      },
-      { en: "The trained model file", es: "El archivo del modelo entrenado" },
-    ],
-    correct: 0,
-    correctReason: {
-      en: "Parameters are inputs you fix before training starts — a learning rate is exactly that.",
-      es: "Los parámetros son entradas que fijas antes de empezar el entrenamiento; la tasa de aprendizaje es exactamente eso.",
-    },
-    wrongReasons: [
-      null,
-      {
-        en: "Test accuracy is measured after training finishes — that makes it a metric, not a parameter.",
-        es: "La precisión se mide después de que termina el entrenamiento, eso la convierte en una métrica, no en un parámetro.",
-      },
-      {
-        en: "A confusion matrix image is a file attached to the run — that's an artifact, not a parameter.",
-        es: "Una imagen de matriz de confusión es un archivo adjunto a la ejecución: eso es un artefacto, no un parámetro.",
-      },
-      {
-        en: "The trained model file is logged as a model artifact via mlflow.log_model(), not a parameter.",
-        es: "El archivo del modelo entrenado se registra como un artefacto de modelo mediante mlflow.log_model(), no como un parámetro.",
-      },
-    ],
-  },
-  {
-    topic: { en: "MLflow", es: "MLflow" },
-    question: {
-      en: "What is the correct relationship between an MLflow Experiment and a Run?",
-      es: "¿Cuál es la relación correcta entre un Experimento y una Ejecución (Run) en MLflow?",
-    },
-    options: [
-      {
-        en: "A Run can belong to multiple Experiments at once",
-        es: "Una Ejecución puede pertenecer a varios Experimentos a la vez",
-      },
-      {
-        en: "An Experiment groups together multiple Runs of the same project",
-        es: "Un Experimento agrupa varias Ejecuciones del mismo proyecto",
-      },
-      {
-        en: "A Run and an Experiment are interchangeable terms",
-        es: "Una Ejecución y un Experimento son términos intercambiables",
-      },
-      {
-        en: "Experiments are created only after all Runs finish",
-        es: "Los Experimentos se crean solo después de que terminan todas las Ejecuciones",
-      },
-    ],
-    correct: 1,
-    correctReason: {
-      en: "An Experiment is the folder; each training run you log inside it is one Run.",
-      es: "Un Experimento es la carpeta; cada entrenamiento que registras dentro de ella es una Ejecución.",
-    },
-    wrongReasons: [
-      {
-        en: "A Run belongs to exactly one Experiment — it isn't shared across several.",
-        es: "Una Ejecución pertenece exactamente a un Experimento; no se comparte entre varios.",
-      },
-      null,
-      {
-        en: "They aren't interchangeable: an Experiment is the container, a Run is one execution logged inside it.",
-        es: "No son intercambiables: un Experimento es el contenedor, una Ejecución es una ejecución concreta registrada dentro de él.",
-      },
-      {
-        en: "It's the reverse — an Experiment has to exist before a Run can be logged into it.",
-        es: "Es al revés: el Experimento debe existir antes de poder registrar una Ejecución dentro de él.",
-      },
-    ],
-  },
-  {
-    topic: { en: "MLflow", es: "MLflow" },
-    question: {
-      en: "Which MLflow function is used to save a trained model as a reusable, versioned entity in the Model Registry?",
-      es: "¿Qué función de MLflow se usa para guardar un modelo entrenado como una entidad reutilizable y versionada en el Model Registry?",
-    },
-    options: [
-      { en: "mlflow.log_metric()", es: "mlflow.log_metric()" },
-      { en: "mlflow.log_artifact()", es: "mlflow.log_artifact()" },
-      {
-        en: "mlflow.register_model() (or log_model(..., registered_model_name=...))",
-        es: "mlflow.register_model() (o log_model(..., registered_model_name=...))",
-      },
-      { en: "mlflow.set_experiment()", es: "mlflow.set_experiment()" },
-    ],
-    correct: 2,
-    correctReason: {
-      en: "register_model() (or log_model with registered_model_name) is what actually creates a versioned entry in the Model Registry.",
-      es: "register_model() (o log_model con registered_model_name) es lo que realmente crea una entrada versionada en el Model Registry.",
-    },
-    wrongReasons: [
-      {
-        en: "log_metric() records a scalar value like accuracy — it has nothing to do with the model registry.",
-        es: "log_metric() registra un valor escalar como la precisión; no tiene nada que ver con el registro de modelos.",
-      },
-      {
-        en: "log_artifact() saves an arbitrary file with the run, but it doesn't create a versioned registry entry.",
-        es: "log_artifact() guarda un archivo arbitrario junto con la ejecución, pero no crea una entrada versionada en el registro.",
-      },
-      null,
-      {
-        en: "set_experiment() just selects which experiment new runs are logged into — it doesn't save or version a model.",
-        es: "set_experiment() solo selecciona en qué experimento se registran las nuevas ejecuciones; no guarda ni versiona ningún modelo.",
-      },
-    ],
-  },
-  {
-    topic: { en: "MLflow", es: "MLflow" },
-    question: {
-      en: "Why is it useful to log the same metric (e.g. F1-score) across several Runs with different hyperparameters?",
-      es: "¿Por qué es útil registrar la misma métrica (por ejemplo, F1-score) en varias Ejecuciones con distintos hiperparámetros?",
-    },
-    options: [
-      {
-        en: "It isn't useful — one Run is always enough",
-        es: "No es útil: una sola Ejecución siempre es suficiente",
-      },
-      {
-        en: "It reduces the model's training time",
-        es: "Reduce el tiempo de entrenamiento del modelo",
-      },
-      {
-        en: "MLflow requires at least 3 Runs per Experiment to function",
-        es: "MLflow requiere al menos 3 Ejecuciones por Experimento para funcionar",
-      },
-      {
-        en: "It lets you compare configurations objectively instead of relying on memory",
-        es: "Permite comparar configuraciones de forma objetiva en lugar de confiar en la memoria",
-      },
-    ],
-    correct: 3,
-    correctReason: {
-      en: "Logging the same metric across configurations is what turns tuning into a comparison instead of a guess.",
-      es: "Registrar la misma métrica entre configuraciones es lo que convierte el ajuste de hiperparámetros en una comparación en lugar de una adivinanza.",
-    },
-    wrongReasons: [
-      {
-        en: "One run gives you a single number with nothing to compare it against — that's exactly what tracking multiple runs solves.",
-        es: "Una sola ejecución te da un único número sin nada con qué compararlo; eso es exactamente lo que resuelve rastrear varias ejecuciones.",
-      },
-      {
-        en: "Logging a metric only records information; it has no effect on how long training takes.",
-        es: "Registrar una métrica solo guarda información; no afecta en nada la duración del entrenamiento.",
-      },
-      {
-        en: "MLflow has no minimum run count — an Experiment works fine with a single logged Run.",
-        es: "MLflow no exige un número mínimo de ejecuciones; un Experimento funciona bien con una sola Ejecución registrada.",
-      },
-      null,
-    ],
-  },
-  {
-    topic: { en: "MLflow", es: "MLflow" },
-    question: {
       en: "What's the main difference between what Scikit-learn does and what an experiment-tracking tool like MLflow does?",
       es: "¿Cuál es la diferencia principal entre lo que hace Scikit-learn y lo que hace una herramienta de seguimiento de experimentos como MLflow?",
     },
@@ -1297,6 +1092,48 @@ export const QUIZ = [
       {
         en: "MLflow complements a library like scikit-learn — you still need it to actually build and fit models.",
         es: "MLflow complementa a una librería como scikit-learn; de todas formas la necesitas para construir y ajustar modelos.",
+      },
+    ],
+  },
+  {
+    topic: { en: "MLflow", es: "MLflow" },
+    question: {
+      en: "In MLflow, which of these would you log as a Parameter rather than a Metric?",
+      es: "En MLflow, ¿cuál de estos registrarías como un Parámetro en lugar de una Métrica?",
+    },
+    options: [
+      {
+        en: "The learning rate used for training",
+        es: "La tasa de aprendizaje usada para el entrenamiento",
+      },
+      {
+        en: "The model's test accuracy",
+        es: "La precisión del modelo en el conjunto de prueba",
+      },
+      {
+        en: "A confusion matrix image",
+        es: "Una imagen de la matriz de confusión",
+      },
+      { en: "The trained model file", es: "El archivo del modelo entrenado" },
+    ],
+    correct: 0,
+    correctReason: {
+      en: "Parameters are inputs you fix before training starts — a learning rate is exactly that.",
+      es: "Los parámetros son entradas que fijas antes de empezar el entrenamiento; la tasa de aprendizaje es exactamente eso.",
+    },
+    wrongReasons: [
+      null,
+      {
+        en: "Test accuracy is measured after training finishes — that makes it a metric, not a parameter.",
+        es: "La precisión se mide después de que termina el entrenamiento, eso la convierte en una métrica, no en un parámetro.",
+      },
+      {
+        en: "A confusion matrix image is a file attached to the run — that's an artifact, not a parameter.",
+        es: "Una imagen de matriz de confusión es un archivo adjunto a la ejecución: eso es un artefacto, no un parámetro.",
+      },
+      {
+        en: "The trained model file is logged as a model artifact via mlflow.log_model(), not a parameter.",
+        es: "El archivo del modelo entrenado se registra como un artefacto de modelo mediante mlflow.log_model(), no como un parámetro.",
       },
     ],
   },
@@ -1345,150 +1182,6 @@ export const QUIZ = [
       {
         en: "Capping changes the stored value itself — it doesn't selectively hide it from just one phase.",
         es: "Acotar cambia el propio valor almacenado; no se trata de ocultarlo selectivamente en una sola fase.",
-      },
-    ],
-  },
-  {
-    topic: {
-      en: "Preprocessing & Ensemble Methods",
-      es: "Preprocesamiento y Métodos de Ensamble",
-    },
-    question: {
-      en: "Why might engineering a ratio between two correlated numeric features (instead of using them separately) help a classifier?",
-      es: "¿Por qué podría ayudar a un clasificador crear una razón (ratio) entre dos variables numéricas correlacionadas, en lugar de usarlas por separado?",
-    },
-    options: [
-      {
-        en: "It always improves accuracy regardless of the model",
-        es: "Siempre mejora la precisión, sin importar el modelo",
-      },
-      {
-        en: "It reduces the dataset size",
-        es: "Reduce el tamaño del conjunto de datos",
-      },
-      {
-        en: "It can capture a relationship between the two variables that's more directly relevant to the target than either raw value alone",
-        es: "Puede capturar una relación entre las dos variables que es más relevante para el objetivo que cualquiera de los valores originales por separado",
-      },
-      {
-        en: "It removes the need for a train/test split",
-        es: "Elimina la necesidad de una división entrenamiento/prueba",
-      },
-    ],
-    correct: 2,
-    correctReason: {
-      en: "A ratio can encode the relationship between two variables in a way neither raw feature captures alone.",
-      es: "Una razón puede codificar la relación entre dos variables de una forma que ninguna de las variables originales captura por sí sola.",
-    },
-    wrongReasons: [
-      {
-        en: "No engineered feature is guaranteed to help every model — it depends on the data and the target relationship.",
-        es: "Ninguna variable creada garantiza ayudar a todos los modelos; depende de los datos y de la relación con el objetivo.",
-      },
-      {
-        en: "Adding a derived feature is a new column, not fewer rows — dataset size is unaffected.",
-        es: "Agregar una variable derivada es una columna nueva, no menos filas; el tamaño del conjunto de datos no cambia.",
-      },
-      null,
-      {
-        en: "A ratio feature doesn't change how you evaluate the model — you still need a held-out split to check generalization.",
-        es: "Una variable de razón no cambia cómo evalúas el modelo; de todas formas necesitas una división de validación para comprobar la generalización.",
-      },
-    ],
-  },
-  {
-    topic: {
-      en: "Preprocessing & Ensemble Methods",
-      es: "Preprocesamiento y Métodos de Ensamble",
-    },
-    question: {
-      en: "Why is it risky to reuse a single already-fitted ColumnTransformer/preprocessor object across two different model pipelines?",
-      es: "¿Por qué es riesgoso reutilizar un mismo objeto ColumnTransformer/preprocesador ya ajustado en dos pipelines de modelos diferentes?",
-    },
-    options: [
-      {
-        en: "It isn't risky — this is the recommended approach",
-        es: "No es riesgoso; es el enfoque recomendado",
-      },
-      {
-        en: "It causes a memory leak that crashes the kernel",
-        es: "Provoca una fuga de memoria que bloquea el kernel",
-      },
-      {
-        en: "ColumnTransformer objects can only be used once, ever, and must be deleted after",
-        es: "Los objetos ColumnTransformer solo pueden usarse una vez, y deben eliminarse después",
-      },
-      {
-        en: "Fitting it again inside the second pipeline can silently change its state, affecting the first pipeline too — use clone() to avoid this",
-        es: "Ajustarlo de nuevo dentro del segundo pipeline puede cambiar silenciosamente su estado, afectando también al primer pipeline; usa clone() para evitarlo",
-      },
-    ],
-    correct: 3,
-    correctReason: {
-      en: "Fitting a shared transformer inside a second pipeline can quietly mutate it — clone() keeps the two independent.",
-      es: "Ajustar un transformador compartido dentro de un segundo pipeline puede modificarlo silenciosamente; clone() mantiene a ambos independientes.",
-    },
-    wrongReasons: [
-      {
-        en: "It is risky — reusing a fitted transformer across pipelines is a common source of subtle bugs, not a best practice.",
-        es: "Sí es riesgoso: reutilizar un transformador ajustado entre pipelines es una fuente común de errores sutiles, no una buena práctica.",
-      },
-      {
-        en: "It doesn't cause a memory leak or crash — the real failure mode is silent state corruption between the two pipelines.",
-        es: "No provoca una fuga de memoria ni un bloqueo; el verdadero problema es la corrupción silenciosa de estado entre los dos pipelines.",
-      },
-      {
-        en: "A transformer can be refit any number of times; the real problem is shared mutable state, not a one-use limit.",
-        es: "Un transformador se puede reajustar cualquier cantidad de veces; el problema real es el estado mutable compartido, no un límite de un solo uso.",
-      },
-      null,
-    ],
-  },
-  {
-    topic: {
-      en: "Preprocessing & Ensemble Methods",
-      es: "Preprocesamiento y Métodos de Ensamble",
-    },
-    question: {
-      en: "What does handle_unknown='ignore' do when passed to a OneHotEncoder?",
-      es: "¿Qué hace handle_unknown='ignore' cuando se pasa a un OneHotEncoder?",
-    },
-    options: [
-      {
-        en: "Prevents an error when the encoder sees a category at prediction time that it never saw during training",
-        es: "Evita un error cuando el codificador ve, al predecir, una categoría que nunca vio durante el entrenamiento",
-      },
-      {
-        en: "Ignores missing values in the training set",
-        es: "Ignora los valores faltantes en el conjunto de entrenamiento",
-      },
-      {
-        en: "Skips encoding for columns with too many unique values",
-        es: "Omite la codificación de columnas con demasiados valores únicos",
-      },
-      {
-        en: "Disables one-hot encoding and falls back to label encoding",
-        es: "Desactiva la codificación one-hot y usa en su lugar codificación por etiquetas (label encoding)",
-      },
-    ],
-    correct: 0,
-    correctReason: {
-      en: "It tells the encoder to zero-fill an unseen category at inference instead of raising an error.",
-      es: "Le indica al codificador que rellene con ceros una categoría no vista al momento de inferir, en lugar de lanzar un error.",
-    },
-    wrongReasons: [
-      null,
-      {
-        en: "Missing values (NaNs) are a separate concern, usually handled by an imputer — not what this parameter controls.",
-        es: "Los valores faltantes (NaN) son un asunto distinto, normalmente manejado por un imputador; no es lo que controla este parámetro.",
-      },
-      {
-        en: "It has nothing to do with how many categories a column has — high cardinality isn't what triggers this behavior.",
-        es: "No tiene nada que ver con cuántas categorías tiene una columna; la alta cardinalidad no es lo que activa este comportamiento.",
-      },
-      {
-        en: "Encoding still happens as one-hot; unseen categories are just zero-filled instead of raising an error.",
-        es: "La codificación sigue siendo one-hot; las categorías no vistas simplemente se rellenan con ceros en lugar de lanzar un error.",
       },
     ],
   },
