@@ -722,41 +722,6 @@ dvc repro`,
     ],
   },
   {
-    id: "continuous-training",
-    type: "grid",
-    section: 5,
-    eyebrow: { en: "05 · Quality", es: "05 · Calidad" },
-    title: { en: "Continuous Training", es: "Entrenamiento Continuo" },
-    lede: {
-      en: "A model trained once and never revisited is a model that will eventually go stale. Retraining should be a pipeline, not a fire drill.",
-      es: "Un modelo entrenado una vez y nunca revisado eventualmente quedará obsoleto. El reentrenamiento debería ser un pipeline, no una emergencia.",
-    },
-    cols: 3,
-    panels: [
-      {
-        title: { en: "Scheduled", es: "Programado" },
-        body: {
-          en: "Retrain on a fixed cadence that matches how fast the underlying data actually changes.",
-          es: "Reentrena con una cadencia fija que coincida con la rapidez con la que realmente cambian los datos subyacentes.",
-        },
-      },
-      {
-        title: { en: "Triggered by drift", es: "Disparado por drift" },
-        body: {
-          en: "Kick off retraining automatically when input data or predictions drift past a threshold.",
-          es: "Inicia el reentrenamiento automáticamente cuando los datos de entrada o las predicciones se desvían más allá de un umbral.",
-        },
-      },
-      {
-        title: { en: "Triggered by decay", es: "Disparado por degradación" },
-        body: {
-          en: "Fire when live performance metrics fall below an agreed floor.",
-          es: "Se activa cuando las métricas de desempeño en vivo caen por debajo de un mínimo acordado.",
-        },
-      },
-    ],
-  },
-  {
     id: "best-practices",
     type: "levels",
     section: 5,
@@ -936,167 +901,12 @@ test = df[df['date'] >= split_date]`,
     ],
   },
 
-  /* ----------------------------- 07 · Case Study --------------------------- */
-  {
-    id: "case-study-intro",
-    type: "casestudy",
-    section: 7,
-    eyebrow: { en: "07 · Case Study", es: "07 · Caso de Estudio" },
-    title: {
-      en: "Case Study: Production Recommendation System",
-      es: "Caso de Estudio: Sistema de Recomendaciones en Producción",
-    },
-    backgroundTitle: { en: "Background", es: "Contexto" },
-    background: [
-      { en: "E-commerce platform", es: "Plataforma de comercio electrónico" },
-      { en: "500K monthly users", es: "500 mil usuarios mensuales" },
-      {
-        en: "Needed ML-driven product recommendations",
-        es: "Necesitaba recomendaciones de productos basadas en ML",
-      },
-      {
-        en: "Frequent outages & zero reproducibility",
-        es: "Caídas frecuentes y cero reproducibilidad",
-      },
-    ],
-    challengesTitle: { en: "Challenges", es: "Desafíos" },
-    challenges: [
-      {
-        problem: { en: "No versioning", es: "Sin versionado" },
-        impact: {
-          en: "20+ pickle files scattered on a shared drive",
-          es: "Más de 20 archivos pickle dispersos en una unidad compartida",
-        },
-      },
-      {
-        problem: { en: "Slow experiments", es: "Experimentos lentos" },
-        impact: {
-          en: "8-hour training time",
-          es: "8 horas de tiempo de entrenamiento",
-        },
-      },
-      {
-        problem: { en: "No monitoring", es: "Sin monitoreo" },
-        impact: {
-          en: "Couldn't detect model decay",
-          es: "No se podía detectar la degradación del modelo",
-        },
-      },
-      {
-        problem: { en: "Manual deployments", es: "Despliegues manuales" },
-        impact: {
-          en: "6-hour release cycles",
-          es: "Ciclos de lanzamiento de 6 horas",
-        },
-      },
-    ],
-  },
-  {
-    id: "case-study-fix",
-    type: "levels",
-    section: 7,
-    eyebrow: { en: "07 · Case Study", es: "07 · Caso de Estudio" },
-    title: {
-      en: "Case Study: The Fix — Three Phases",
-      es: "Caso de Estudio: La Solución en Tres Fases",
-    },
-    lede: {
-      en: "Three phases turned a fragile, manual process into a reliable pipeline.",
-      es: "Tres fases convirtieron un proceso frágil y manual en un pipeline confiable.",
-    },
-    levels: [
-      {
-        tag: { en: "1", es: "1" },
-        name: { en: "Infrastructure", es: "Infraestructura" },
-        desc: {
-          en: "MLflow on EC2 + PostgreSQL, DVC + S3, logging & dashboards",
-          es: "MLflow en EC2 + PostgreSQL, DVC + S3, registro y paneles",
-        },
-      },
-      {
-        tag: { en: "2", es: "2" },
-        name: { en: "Distributed Training", es: "Entrenamiento Distribuido" },
-        desc: {
-          en: "Spark ALS model — 8 hrs → 45 min",
-          es: "Modelo Spark ALS: de 8 h a 45 min",
-        },
-      },
-      {
-        tag: { en: "3", es: "3" },
-        name: { en: "Model Serving", es: "Servicio del Modelo" },
-        desc: {
-          en: "FastAPI endpoint loading from the MLflow registry",
-          es: "Endpoint de FastAPI que carga desde el registro de MLflow",
-        },
-      },
-    ],
-  },
-  {
-    id: "case-study-results",
-    type: "stats",
-    section: 7,
-    eyebrow: { en: "07 · Case Study", es: "07 · Caso de Estudio" },
-    title: { en: "Case Study: Results", es: "Caso de Estudio: Resultados" },
-    lede: {
-      en: "Before → after MLOps adoption.",
-      es: "Antes → después de adoptar MLOps.",
-    },
-    tiles: [
-      {
-        value: "85%",
-        label: { en: "Faster deployment", es: "Despliegue más rápido" },
-        sub: { en: "2-3 months → 2 weeks", es: "2-3 meses → 2 semanas" },
-      },
-      {
-        value: "89%",
-        label: { en: "Faster training", es: "Entrenamiento más rápido" },
-        sub: { en: "8 hrs → 45 min", es: "8 h → 45 min" },
-      },
-      {
-        value: "100%",
-        label: { en: "Reproducibility", es: "Reproducibilidad" },
-        sub: { en: "0% → full tracking", es: "0% → seguimiento total" },
-      },
-      {
-        value: "+81%",
-        label: { en: "Click-through rate", es: "Tasa de clics" },
-        sub: { en: "2.1% → 3.8%", es: "2.1% → 3.8%" },
-      },
-    ],
-    highlight: {
-      value: "+$2.3M / year",
-      desc: {
-        en: "revenue impact from improved recommendation quality",
-        es: "impacto en ingresos por año gracias a mejores recomendaciones",
-      },
-    },
-    winsTitle: { en: "Technical Wins", es: "Logros Técnicos" },
-    wins: [
-      {
-        en: "All 47 experiments tracked in MLflow",
-        es: "Los 47 experimentos quedaron registrados en MLflow",
-      },
-      {
-        en: "Data versioning enabled A/B test rollbacks",
-        es: "El versionado de datos permitió revertir pruebas A/B",
-      },
-      {
-        en: "Automated retraining every Sunday at 2 AM",
-        es: "Reentrenamiento automatizado cada domingo a las 2 AM",
-      },
-      {
-        en: "Model performance dashboards in Grafana",
-        es: "Paneles de desempeño del modelo en Grafana",
-      },
-    ],
-  },
-
-  /* ------------------------------- 08 · Roadmap ---------------------------- */
+  /* ------------------------------- 07 · Roadmap ---------------------------- */
   {
     id: "maturity-model",
     type: "levels",
-    section: 8,
-    eyebrow: { en: "08 · Roadmap", es: "08 · Hoja de ruta" },
+    section: 7,
+    eyebrow: { en: "07 · Roadmap", es: "07 · Hoja de ruta" },
     title: {
       en: "An MLOps Maturity Model",
       es: "Un Modelo de Madurez de MLOps",
@@ -1143,8 +953,8 @@ test = df[df['date'] >= split_date]`,
   {
     id: "adoption-roadmap",
     type: "levels",
-    section: 8,
-    eyebrow: { en: "08 · Roadmap", es: "08 · Hoja de ruta" },
+    section: 7,
+    eyebrow: { en: "07 · Roadmap", es: "07 · Hoja de ruta" },
     title: {
       en: "Implementing MLOps: A Roadmap",
       es: "Implementar MLOps: Una Hoja de Ruta",
@@ -1221,7 +1031,7 @@ test = df[df['date'] >= split_date]`,
   {
     id: "takeaways",
     type: "closing",
-    section: 9,
+    section: 8,
     eyebrow: { en: "Closing", es: "Cierre" },
     title: { en: "Key Takeaways", es: "Conclusiones Clave" },
     cols: 2,
