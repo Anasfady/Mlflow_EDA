@@ -186,21 +186,6 @@ function ContentSlide({ data, lang }) {
           ))}
         </Grid>
         <p className="mt-10 font-mono text-sm text-[#8fa9bd]">{t(data.thankYou)}</p>
-        {data.nextSteps && (
-          <div className="mt-6 w-full max-w-4xl border border-[#a0cde1]/20 bg-[#0e2038]/40 px-5 py-3.5">
-            <span className="mr-3 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#7ec6e6]">
-              {t(data.nextStepsTitle)}
-            </span>
-            <span className="font-mono text-xs text-[#8fa9bd]">
-              {data.nextSteps.map((s, i) => (
-                <span key={i}>
-                  {i > 0 && <span className="text-[#ff8a3d]"> &middot; </span>}
-                  {i + 1}. {t(s)}
-                </span>
-              ))}
-            </span>
-          </div>
-        )}
       </Slide>
     );
   }

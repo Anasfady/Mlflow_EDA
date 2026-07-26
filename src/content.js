@@ -1028,19 +1028,6 @@ test = df[df['date'] >= split_date]`,
         },
       },
     ],
-    nextStepsTitle: { en: "Next Steps", es: "Próximos Pasos" },
-    nextSteps: [
-      { en: "Set up MLflow locally", es: "Configura MLflow en tu máquina" },
-      {
-        en: "Version your first dataset with DVC",
-        es: "Versiona tu primer conjunto de datos con DVC",
-      },
-      { en: "Write one automated test", es: "Escribe una prueba automatizada" },
-      {
-        en: "Deploy to staging & monitor for a week",
-        es: "Despliega a staging y monitorea durante una semana",
-      },
-    ],
     thankYou: { en: "Thank you.", es: "Gracias." },
   },
 ];
