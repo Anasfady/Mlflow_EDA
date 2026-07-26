@@ -620,183 +620,10 @@ dvc repro`,
 
   /* ---------------------------- 04 · Automation ------------------------ */
   {
-    id: "ci-for-ml",
-    type: "code",
-    section: 4,
-    eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: { en: "CI for Machine Learning", es: "CI para Machine Learning" },
-    lede: {
-      en: "Every merge should trigger more than a lint check: data validity, training smoke tests, and model-quality gates before anything ships.",
-      es: "Cada merge debería disparar algo más que un lint: validez de datos, pruebas rápidas de entrenamiento y controles de calidad del modelo antes de publicar nada.",
-    },
-    code: `name: ML Pipeline
-on:
-  push: { branches: [main] }
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-      - run: pip install -r requirements.txt
-      - run: pytest tests/
-
-  train:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: dvc pull
-      - run: python src/models/train.py
-      - run: python src/evaluation/metrics.py`,
-    sidePanels: [
-      {
-        title: { en: "test", es: "test" },
-        body: {
-          en: "Installs dependencies and runs the test suite before anything trains.",
-          es: "Instala las dependencias y ejecuta la batería de pruebas antes de entrenar nada.",
-        },
-      },
-      {
-        title: { en: "train", es: "train" },
-        body: {
-          en: "Only runs if tests pass — pulls versioned data with DVC, trains, and evaluates.",
-          es: "Solo se ejecuta si las pruebas pasan: descarga los datos versionados con DVC, entrena y evalúa.",
-        },
-      },
-    ],
-    note: {
-      en: "This gate prevents bad models from ever reaching production.",
-      es: "Esta compuerta evita que un modelo defectuoso llegue alguna vez a producción.",
-    },
-  },
-  {
-    id: "deployment-strategies",
-    type: "grid",
-    section: 4,
-    eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: { en: "Deployment Strategies", es: "Estrategias de Despliegue" },
-    lede: {
-      en: "A new model is a hypothesis, not a certainty. Roll it out the way you would any risky change — gradually, with an escape hatch.",
-      es: "Un modelo nuevo es una hipótesis, no una certeza. Despliégalo como cualquier cambio riesgoso: de forma gradual y con una salida de emergencia.",
-    },
-    cols: 3,
-    panels: [
-      {
-        title: { en: "Shadow", es: "Sombra (Shadow)" },
-        body: {
-          en: "The new model runs alongside production, scoring real traffic silently for comparison — no user impact.",
-          es: "El modelo nuevo corre junto a producción, evaluando tráfico real en silencio para comparar, sin impacto en los usuarios.",
-        },
-      },
-      {
-        title: { en: "Canary", es: "Canario (Canary)" },
-        body: {
-          en: "A small slice of traffic is routed to the new model; expand only if metrics hold up.",
-          es: "Una pequeña porción del tráfico se enruta al modelo nuevo; se amplía solo si las métricas se sostienen.",
-        },
-      },
-      {
-        title: { en: "Blue/Green", es: "Azul/Verde (Blue/Green)" },
-        body: {
-          en: "Two full environments; traffic is switched instantly, with an instant rollback if needed.",
-          es: "Dos entornos completos; el tráfico se cambia al instante, con reversión inmediata si es necesario.",
-        },
-      },
-    ],
-  },
-  {
-    id: "model-registry",
-    type: "flow",
-    section: 4,
-    eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: {
-      en: "Model Registry & Governance",
-      es: "Registro de Modelos y Gobernanza",
-    },
-    lede: {
-      en: "A central, versioned catalog of models — with stage transitions that require approval before something reaches production.",
-      es: "Un catálogo central y versionado de modelos, con transiciones de etapa que requieren aprobación antes de llegar a producción.",
-    },
-    steps: [
-      {
-        label: { en: "None", es: "Ninguno" },
-        sub: { en: "registered", es: "registrado" },
-      },
-      {
-        label: { en: "Staging", es: "Staging" },
-        sub: { en: "under review", es: "en revisión" },
-      },
-      {
-        label: { en: "Production", es: "Producción" },
-        sub: { en: "serving traffic", es: "sirviendo tráfico" },
-      },
-      {
-        label: { en: "Archived", es: "Archivado" },
-        sub: { en: "retired", es: "retirado" },
-      },
-    ],
-    cols: 2,
-    panels: [
-      {
-        title: { en: "Model cards", es: "Fichas de modelo" },
-        body: {
-          en: "Intended use, known limitations, training data summary, and evaluation results travel with the model.",
-          es: "El uso previsto, las limitaciones conocidas, un resumen de los datos de entrenamiento y los resultados de evaluación viajan junto con el modelo.",
-        },
-      },
-      {
-        title: { en: "Approval workflow", es: "Flujo de aprobación" },
-        body: {
-          en: "Promotion to production requires sign-off, not a direct push from a notebook.",
-          es: "El paso a producción requiere una autorización formal, no un push directo desde un notebook.",
-        },
-      },
-    ],
-  },
-  {
-    id: "architecture",
-    type: "architecture",
-    section: 4,
-    eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
-    title: {
-      en: "Architecture of a Production ML System",
-      es: "Arquitectura de un Sistema de ML en Producción",
-    },
-    stages: [
-      { label: { en: "Data Sources", es: "Fuentes de Datos" } },
-      {
-        label: { en: "Data Pipeline", es: "Pipeline de Datos" },
-        sub: { en: "Airflow / DVC", es: "Airflow / DVC" },
-      },
-      {
-        label: { en: "Feature Store", es: "Feature Store" },
-        sub: { en: "Feast", es: "Feast" },
-      },
-    ],
-    branches: [
-      { label: { en: "MLflow Tracking", es: "Seguimiento MLflow" } },
-      { label: { en: "Model Registry", es: "Registro de Modelos" } },
-      {
-        label: { en: "Model Serving", es: "Servicio del Modelo" },
-        sub: { en: "FastAPI", es: "FastAPI" },
-      },
-    ],
-    child: {
-      label: { en: "Monitoring", es: "Monitoreo" },
-      sub: { en: "Prometheus / Grafana", es: "Prometheus / Grafana" },
-    },
-    note: {
-      en: "Feature stores prevent skew · Model registry gives version control + staging/production lifecycle · FastAPI serves predictions · Monitoring catches drift & failures",
-      es: "Los feature stores evitan el skew · El registro de modelos aporta control de versiones y ciclo de vida staging/producción · FastAPI sirve las predicciones · El monitoreo detecta drift y fallos",
-    },
-  },
-  {
     id: "tool-landscape",
     type: "landscape",
     section: 4,
-    eyebrow: { en: "04 · Automation", es: "04 · Automatización" },
+    eyebrow: { en: "04 · Tooling", es: "04 · Herramientas" },
     title: {
       en: "The MLOps Tool Landscape",
       es: "El Panorama de Herramientas de MLOps",
@@ -1109,220 +936,12 @@ test = df[df['date'] >= split_date]`,
     ],
   },
 
-  /* ---------------------------- 07 · Production ------------------------- */
-  {
-    id: "monitoring",
-    type: "grid",
-    section: 7,
-    eyebrow: { en: "07 · Production", es: "07 · Producción" },
-    title: {
-      en: "Monitoring & Observability",
-      es: "Monitoreo y Observabilidad",
-    },
-    lede: {
-      en: "A deployed model needs three layers of visibility — system health is not enough on its own.",
-      es: "Un modelo desplegado necesita tres capas de visibilidad: la salud del sistema por sí sola no es suficiente.",
-    },
-    cols: 3,
-    panels: [
-      {
-        title: { en: "Operational", es: "Operacional" },
-        body: {
-          en: "Latency, throughput, error rate, resource usage — the same signals as any service.",
-          es: "Latencia, throughput, tasa de errores, uso de recursos: las mismas señales que cualquier servicio.",
-        },
-      },
-      {
-        title: {
-          en: "Data & prediction drift",
-          es: "Drift de datos y predicciones",
-        },
-        body: {
-          en: "Are the inputs and outputs still statistically similar to what the model was trained on?",
-          es: "¿Las entradas y salidas siguen siendo estadísticamente similares a aquello con lo que se entrenó el modelo?",
-        },
-      },
-      {
-        title: { en: "Business impact", es: "Impacto de negocio" },
-        body: {
-          en: "Is the model still moving the metric it was built for — conversions, fraud caught, churn avoided?",
-          es: "¿El modelo sigue moviendo la métrica para la que fue construido: conversiones, fraude detectado, cancelaciones evitadas?",
-        },
-      },
-    ],
-  },
-  {
-    id: "drift",
-    type: "grid",
-    section: 7,
-    eyebrow: { en: "07 · Production", es: "07 · Producción" },
-    title: { en: "Data & Concept Drift", es: "Drift de Datos y de Concepto" },
-    lede: {
-      en: "The world moves. Two related but distinct failure modes explain most post-deployment model decay.",
-      es: "El mundo cambia. Dos modos de fallo relacionados pero distintos explican la mayor parte de la degradación de modelos tras el despliegue.",
-    },
-    cols: 2,
-    panels: [
-      {
-        title: { en: "Data drift", es: "Drift de datos" },
-        body: {
-          en: "The distribution of incoming features shifts away from training data — new user segment, seasonal change, upstream schema change.",
-          es: "La distribución de las variables entrantes se aleja de los datos de entrenamiento: un nuevo segmento de usuarios, un cambio estacional, un cambio de esquema en el origen.",
-        },
-      },
-      {
-        title: { en: "Concept drift", es: "Drift de concepto" },
-        body: {
-          en: "The relationship between features and the target itself changes — what used to predict the outcome no longer does.",
-          es: "La relación entre las variables y el objetivo cambia: lo que antes predecía el resultado ya no lo hace.",
-        },
-      },
-    ],
-    note: {
-      en: "Statistical tests on feature and prediction distributions catch drift before it shows up as a business metric on fire.",
-      es: "Las pruebas estadísticas sobre las distribuciones de variables y predicciones detectan el drift antes de que aparezca como una métrica de negocio en llamas.",
-    },
-  },
-  {
-    id: "incident-response",
-    type: "grid",
-    section: 7,
-    eyebrow: { en: "07 · Production", es: "07 · Producción" },
-    title: {
-      en: "Incident Response & Rollback",
-      es: "Respuesta a Incidentes y Rollback",
-    },
-    lede: {
-      en: "Treat a bad model deployment the way you'd treat any production incident — with a plan decided before it happens, not during.",
-      es: "Trata un despliegue de modelo fallido como cualquier incidente de producción: con un plan decidido antes de que ocurra, no durante.",
-    },
-    cols: 3,
-    panels: [
-      {
-        title: { en: "Instant rollback", es: "Rollback instantáneo" },
-        body: {
-          en: "The registry always keeps the last known-good version one command away from serving again.",
-          es: "El registro siempre mantiene la última versión buena conocida a un solo comando de volver a servir.",
-        },
-      },
-      {
-        title: { en: "Kill switch", es: "Interruptor de emergencia" },
-        body: {
-          en: "A way to fall back to a simple rule-based or previous-model response if the new one misbehaves.",
-          es: "Una forma de volver a una respuesta simple basada en reglas o al modelo anterior si el nuevo se comporta mal.",
-        },
-      },
-      {
-        title: { en: "Postmortems", es: "Postmortems" },
-        body: {
-          en: "Blameless review of what drifted, what monitoring missed, and what test would have caught it.",
-          es: "Revisión sin culpas de qué se desvió, qué no detectó el monitoreo y qué prueba lo habría atrapado.",
-        },
-      },
-    ],
-  },
-
-  /* -------------------------------- 08 · Trust --------------------------- */
-  {
-    id: "security-compliance",
-    type: "grid",
-    section: 8,
-    eyebrow: { en: "08 · Trust", es: "08 · Confianza" },
-    title: {
-      en: "Security, Privacy & Compliance",
-      es: "Seguridad, Privacidad y Cumplimiento",
-    },
-    lede: {
-      en: "Models are trained on sensitive data and make consequential decisions — both need explicit controls, not assumptions.",
-      es: "Los modelos se entrenan con datos sensibles y toman decisiones con consecuencias reales: ambas cosas necesitan controles explícitos, no suposiciones.",
-    },
-    cols: 2,
-    panels: [
-      {
-        title: { en: "Access control", es: "Control de acceso" },
-        body: {
-          en: "Who can read training data, pull a model artifact, or promote to production — scoped and audited.",
-          es: "Quién puede leer los datos de entrenamiento, descargar un artefacto de modelo o promoverlo a producción, con alcance definido y auditado.",
-        },
-      },
-      {
-        title: { en: "PII handling", es: "Manejo de datos personales (PII)" },
-        body: {
-          en: "Minimize, mask, or anonymize sensitive fields wherever they enter the pipeline.",
-          es: "Minimiza, enmascara o anonimiza los campos sensibles en cualquier punto donde entren al pipeline.",
-        },
-      },
-      {
-        title: { en: "Audit trails", es: "Rastros de auditoría" },
-        body: {
-          en: "Every training run and deployment tied to who, what, and when.",
-          es: "Cada ejecución de entrenamiento y despliegue vinculado a quién, qué y cuándo.",
-        },
-      },
-      {
-        title: { en: "Regulatory readiness", es: "Preparación regulatoria" },
-        body: {
-          en: 'Model cards and lineage make "explain this decision" answerable instead of archaeological.',
-          es: "Las fichas de modelo y el linaje hacen que «explica esta decisión» sea algo respondible, no una excavación arqueológica.",
-        },
-      },
-    ],
-  },
-
-  /* ------------------------------- 09 · People ---------------------------- */
-  {
-    id: "team-collaboration",
-    type: "grid",
-    section: 9,
-    eyebrow: { en: "09 · People", es: "09 · Personas" },
-    title: { en: "Team & Collaboration", es: "Equipo y Colaboración" },
-    lede: {
-      en: "MLOps is as much an organizational practice as a technical one — it fails when teams throw work over the wall.",
-      es: "MLOps es tanto una práctica organizacional como técnica: falla cuando los equipos se lanzan el trabajo por encima del muro.",
-    },
-    cols: 4,
-    panels: [
-      {
-        title: { en: "Data Scientists", es: "Científicos de Datos" },
-        body: {
-          en: "Own the modeling approach and evaluation criteria.",
-          es: "Son responsables del enfoque de modelado y los criterios de evaluación.",
-        },
-      },
-      {
-        title: { en: "ML Engineers", es: "Ingenieros de ML" },
-        body: {
-          en: "Own turning experiments into reliable, automated pipelines.",
-          es: "Son responsables de convertir experimentos en pipelines confiables y automatizados.",
-        },
-      },
-      {
-        title: { en: "Data Engineers", es: "Ingenieros de Datos" },
-        body: {
-          en: "Own the pipelines and quality of the data feeding everything else.",
-          es: "Son responsables de los pipelines y la calidad de los datos que alimentan todo lo demás.",
-        },
-      },
-      {
-        title: { en: "Platform / SRE", es: "Plataforma / SRE" },
-        body: {
-          en: "Own the infrastructure, serving, and on-call reliability.",
-          es: "Son responsables de la infraestructura, el servicio y la confiabilidad de guardia.",
-        },
-      },
-    ],
-    note: {
-      en: "Shared ownership of production outcomes — not a handoff at the model registry — is what actually keeps systems healthy.",
-      es: "La propiedad compartida de los resultados en producción, y no una simple entrega en el registro de modelos, es lo que realmente mantiene sanos a los sistemas.",
-    },
-  },
-
-  /* ----------------------------- 10 · Case Study --------------------------- */
+  /* ----------------------------- 07 · Case Study --------------------------- */
   {
     id: "case-study-intro",
     type: "casestudy",
-    section: 10,
-    eyebrow: { en: "10 · Case Study", es: "10 · Caso de Estudio" },
+    section: 7,
+    eyebrow: { en: "07 · Case Study", es: "07 · Caso de Estudio" },
     title: {
       en: "Case Study: Production Recommendation System",
       es: "Caso de Estudio: Sistema de Recomendaciones en Producción",
@@ -1375,8 +994,8 @@ test = df[df['date'] >= split_date]`,
   {
     id: "case-study-fix",
     type: "levels",
-    section: 10,
-    eyebrow: { en: "10 · Case Study", es: "10 · Caso de Estudio" },
+    section: 7,
+    eyebrow: { en: "07 · Case Study", es: "07 · Caso de Estudio" },
     title: {
       en: "Case Study: The Fix — Three Phases",
       es: "Caso de Estudio: La Solución en Tres Fases",
@@ -1415,8 +1034,8 @@ test = df[df['date'] >= split_date]`,
   {
     id: "case-study-results",
     type: "stats",
-    section: 10,
-    eyebrow: { en: "10 · Case Study", es: "10 · Caso de Estudio" },
+    section: 7,
+    eyebrow: { en: "07 · Case Study", es: "07 · Caso de Estudio" },
     title: { en: "Case Study: Results", es: "Caso de Estudio: Resultados" },
     lede: {
       en: "Before → after MLOps adoption.",
@@ -1472,12 +1091,12 @@ test = df[df['date'] >= split_date]`,
     ],
   },
 
-  /* ------------------------------- 11 · Roadmap ---------------------------- */
+  /* ------------------------------- 08 · Roadmap ---------------------------- */
   {
     id: "maturity-model",
     type: "levels",
-    section: 11,
-    eyebrow: { en: "11 · Roadmap", es: "11 · Hoja de ruta" },
+    section: 8,
+    eyebrow: { en: "08 · Roadmap", es: "08 · Hoja de ruta" },
     title: {
       en: "An MLOps Maturity Model",
       es: "Un Modelo de Madurez de MLOps",
@@ -1524,8 +1143,8 @@ test = df[df['date'] >= split_date]`,
   {
     id: "adoption-roadmap",
     type: "levels",
-    section: 11,
-    eyebrow: { en: "11 · Roadmap", es: "11 · Hoja de ruta" },
+    section: 8,
+    eyebrow: { en: "08 · Roadmap", es: "08 · Hoja de ruta" },
     title: {
       en: "Implementing MLOps: A Roadmap",
       es: "Implementar MLOps: Una Hoja de Ruta",
@@ -1602,7 +1221,7 @@ test = df[df['date'] >= split_date]`,
   {
     id: "takeaways",
     type: "closing",
-    section: 12,
+    section: 9,
     eyebrow: { en: "Closing", es: "Cierre" },
     title: { en: "Key Takeaways", es: "Conclusiones Clave" },
     cols: 2,

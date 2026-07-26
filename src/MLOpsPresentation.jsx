@@ -327,35 +327,6 @@ function ContentSlide({ data, lang }) {
     );
   }
 
-  if (data.type === "architecture") {
-    return (
-      <Slide eyebrow={t(data.eyebrow)} title={t(data.title)}>
-        <div className="stagger flex flex-col items-center">
-          {data.stages.map((s, i) => (
-            <div key={i} className="flex flex-col items-center">
-              <FlowStep label={t(s.label)} sub={t(s.sub)} />
-              <FlowArrow vertical />
-            </div>
-          ))}
-          <div className="stagger grid w-full max-w-3xl grid-cols-3 gap-4 border-t border-[#a0cde1]/20 pt-4">
-            {data.branches.map((b, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <FlowStep label={t(b.label)} sub={t(b.sub)} />
-                {i === data.branches.length - 1 && data.child && (
-                  <>
-                    <FlowArrow vertical />
-                    <FlowStep label={t(data.child.label)} sub={t(data.child.sub)} />
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-        {data.note && <p className="mt-6 max-w-4xl font-mono text-xs text-[#8fa9bd]/70">{t(data.note)}</p>}
-      </Slide>
-    );
-  }
-
   if (data.type === "landscape") {
     return (
       <Slide eyebrow={t(data.eyebrow)} title={t(data.title)} lede={t(data.lede)}>
