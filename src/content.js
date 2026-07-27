@@ -1030,6 +1030,21 @@ test = df[df['date'] >= split_date]`,
     ],
     thankYou: { en: "Thank you.", es: "Gracias." },
   },
+  {
+    id: "challenge-kickoff",
+    type: "image",
+    section: 7,
+    title: { en: "Challenge Kickoff", es: "Inicio del Reto" },
+    src: "mlops-world-cup.jpg",
+    alt: {
+      en: "MLOps World Cup",
+      es: "Copa Mundial de MLOps",
+    },
+    caption: {
+      en: "Let's move on to today's challenge.",
+      es: "Pasemos al reto de hoy.",
+    },
+  },
 ];
 
 /* ---------------------------------------------------------------------- */

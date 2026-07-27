@@ -173,6 +173,17 @@ function ContentSlide({ data, lang }) {
     );
   }
 
+  if (data.type === "image") {
+    return (
+      <Slide align="center">
+        <div className="mb-8 w-full max-w-2xl border border-[#a0cde1]/20 bg-[#0e2038]/40 p-2">
+          <img src={`${import.meta.env.BASE_URL}${data.src}`} alt={t(data.alt)} className="w-full" />
+        </div>
+        <h2 className="max-w-2xl font-serif text-3xl font-bold text-[#eef3f2] md:text-4xl">{t(data.caption)}</h2>
+      </Slide>
+    );
+  }
+
   if (data.type === "closing") {
     return (
       <Slide align="center">
